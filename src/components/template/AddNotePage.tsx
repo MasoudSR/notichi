@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function AddNotePage() {
-	const [note, setNote] = useState({ title: "", text: "" });
+	const [note, setNote] = useState<{ title: string; text: string }>({ title: "", text: "" });
 	const router = useRouter();
 
 	const saveHandler = () => {
-		const notes = JSON.parse(localStorage.getItem("note"));
+		const notes = JSON.parse(localStorage.getItem("note") || "");
 		if (!notes) {
 			localStorage.setItem("note", JSON.stringify([note]));
 		} else {

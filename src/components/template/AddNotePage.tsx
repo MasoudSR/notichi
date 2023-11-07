@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function AddNotePage() {
 	const [note, setNote] = useState({ title: "", text: "" });
-    const router = useRouter();
+	const router = useRouter();
 
 	const saveHandler = () => {
 		const notes = JSON.parse(localStorage.getItem("note"));
@@ -15,7 +15,7 @@ export default function AddNotePage() {
 			notes.push(note);
 			localStorage.setItem("note", JSON.stringify(notes));
 		}
-        router.push("/")
+		router.push("/");
 	};
 	return (
 		<div className="flex flex-col bg-slate-300 m-4 p-5 rounded-lg">

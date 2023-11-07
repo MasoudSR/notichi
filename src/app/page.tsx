@@ -1,7 +1,14 @@
+"use client";
+import Note from "@/components/module/Note";
+import { useEffect } from "react";
+
 export default function Home() {
-  return (
-    <main className="flex flex-col items-center justify-between p-24">
-      Notes
-    </main>
-  )
+	const notes = JSON.parse(localStorage.getItem("note"));
+	return (
+		<main className="flex flex-col items-center justify-between">
+			{notes.map((note) => (
+				<Note title={note.title} note={note.text} />
+			))}
+		</main>
+	);
 }

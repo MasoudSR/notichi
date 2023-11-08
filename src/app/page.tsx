@@ -12,7 +12,7 @@ export default function Home() {
 		}
 	}, []);
 	return (
-		<main className="mb-20 flex flex-col items-center justify-between">
+		<main className="mb-20">
 			{notes.length === 0 && <h1>No Notes Found</h1>}
 			{notes.map((note: { id: string; title: string; text: string }) => (
 				<Note key={note.id} id={note.id} title={note.title} note={note.text} />

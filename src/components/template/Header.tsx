@@ -1,11 +1,16 @@
 import Link from "next/link";
+import { GrAddCircle } from "react-icons/gr";
 
 export default function Header() {
-  return (
-    <div className="flex justify-between px-6 py-4 m-4 bg-amber-200 border-r-3 rounded-lg">
-      <span>Search</span>
-			<span className='absolute left-1/2 -translate-x-1/2'>Notichi</span>
-			<span><Link href="/add">Add</Link></span>
+	return (
+		<div className="flex justify-between font-bold items-center align-middle px-6 py-4 bg-amber-200 rounded-b-xl sticky top-0 drop-shadow z-10">
+			<span className="text-3xl">Notichi</span>
+			<span>
+				<Link href="/add" className="flex items-center">
+					Add
+					<GrAddCircle />
+				</Link>
+			</span>
 		</div>
-  )
+	);
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 export default function NoteDetailsPage() {
-    const router = useRouter()
+	const router = useRouter();
 	const params = useParams();
 	const [note, setNote] = useState<{ id: string; title: string; text: string }>({ id: "", title: "", text: "" });
 

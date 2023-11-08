@@ -1,19 +1,26 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { nanoid } from "nanoid";
 
 export default function AddNotePage() {
-	const [note, setNote] = useState<{ title: string; text: string }>({ title: "", text: "" });
+	const [note, setNote] = useState<{ id: string; title: string; text: string }>({ id: "", title: "", text: "" });
 	const router = useRouter();
 
+	useEffect(() => {
+		const id: string = nanoid();
+		setNote({ ...note, id });
+	}, []);
+
 	const saveHandler = () => {
-		const notes = JSON.parse(localStorage.getItem("note") || "");
+		const notes = localStorage.getItem("note") || "";
 		if (!notes) {
 			localStorage.setItem("note", JSON.stringify([note]));
 		} else {
-			notes.push(note);
-			localStorage.setItem("note", JSON.stringify(notes));
+			const newNotes: { id: string; title: string; text: string }[] = JSON.parse(notes);
+			newNotes.push(note);
+			localStorage.setItem("note", JSON.stringify(newNotes));
 		}
 		router.push("/");
 	};

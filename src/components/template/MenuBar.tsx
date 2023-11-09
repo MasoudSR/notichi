@@ -11,13 +11,15 @@ export default function MenuBar() {
 		<div className="bg-white rounded-t-lg fixed bottom-0 w-screen max-w-4xl flex justify-around drop-shadow font-medium">
 			<Link
 				href="/"
-				className={`w-32 p-4 m-3 rounded-lg flex flex-col items-center ${pathName === "/" && "text-[#0265dc]"} `}>
+				className={`w-32 p-4 m-3 rounded-lg flex flex-col items-center hover:bg-blue-50 ${
+					pathName === "/" && "text-[#0265dc]"
+				} `}>
 				<LuStickyNote />
 				All
 			</Link>
 			<Link
 				href="/folders"
-				className={`w-32 p-4 m-3 rounded-lg flex flex-col items-center ${
+				className={`w-32 p-4 m-3 rounded-lg flex flex-col items-center hover:bg-blue-50 ${
 					pathName === "/folders" && "text-[#0265dc]"
 				} `}>
 				<LuFolderClosed />
@@ -25,7 +27,7 @@ export default function MenuBar() {
 			</Link>
 			<Link
 				href="/settings"
-				className={`w-32 p-4 m-3 rounded-lg  flex flex-col items-center ${
+				className={`w-32 p-4 m-3 rounded-lg  flex flex-col items-center hover:bg-blue-50 ${
 					pathName === "/settings" && "text-[#0265dc]"
 				}`}>
 				<LuSettings />

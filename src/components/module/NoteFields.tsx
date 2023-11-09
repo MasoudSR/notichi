@@ -26,11 +26,11 @@ export default function NoteFields({
 				onChange={(e) => setNote({ ...note, text: e.target.value })}
 			/>
 			<button
-				className="bg-[#017AFF] text-white font-medium p-3 rounded-lg mt-3 drop-shadow w-36"
+				className="bg-[#017AFF] text-white font-medium p-3 rounded-lg mt-3 shadow-md shadow-[#017AFF]/30 w-36"
 				onClick={saveHandler}>
 				Save
 			</button>
-			<Link href="/" className="inline-block text-center bg-white p-3 rounded-lg ml-5 drop-shadow w-28">
+			<Link href="/" className="inline-block text-center bg-white p-3 rounded-lg ml-5 drop-shadow-md w-28">
 				Cancel
 			</Link>
 		</div>

@@ -8,7 +8,7 @@ export default function MenuBar() {
 	const pathName = usePathname();
 
 	return (
-		<div className="bg-white rounded-t-lg fixed bottom-0 w-screen max-w-4xl flex justify-around drop-shadow font-medium">
+		<div className="bg-white rounded-t-lg fixed bottom-0 w-screen max-w-4xl flex justify-around drop-shadow font-medium backdrop-blur-sm">
 			<Link
 				href="/"
 				className={`w-32 p-4 m-3 rounded-lg flex flex-col items-center hover:bg-blue-50 ${

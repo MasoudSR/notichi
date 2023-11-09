@@ -33,12 +33,8 @@ export default function NoteDetailsPage() {
 	}, []);
 	return (
 		<>
-			<NoteFields note={note} setNote={setNote} saveHandler={saveHandler} />
-			<button
-				className="inline-block text-center bg-red-500 text-white p-3 rounded-lg ml-6 shadow-md shadow-red-500/30 w-28"
-				onClick={deleteHandler}>
-				Delete
-			</button>
+			<NoteFields note={note} setNote={setNote} saveHandler={saveHandler} deleteHandler={deleteHandler} />
+			
 		</>
 	);
 }

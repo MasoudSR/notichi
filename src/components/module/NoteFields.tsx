@@ -4,10 +4,12 @@ export default function NoteFields({
 	note,
 	setNote,
 	saveHandler,
+	deleteHandler,
 }: {
 	note: { id: string; title: string; text: string };
 	setNote: React.Dispatch<React.SetStateAction<{ id: string; title: string; text: string }>>;
 	saveHandler: React.MouseEventHandler;
+	deleteHandler: React.MouseEventHandler;
 }) {
 	return (
 		<div className="m-6">
@@ -25,14 +27,20 @@ export default function NoteFields({
 				value={note.text}
 				onChange={(e) => setNote({ ...note, text: e.target.value })}
 			/>
-			<button
-				className="bg-[#017AFF] text-white font-medium p-3 rounded-lg mt-3 shadow-md shadow-[#017AFF]/30 w-36"
-				onClick={saveHandler}>
-				Save
-			</button>
-			<Link href="/" className="inline-block text-center bg-white p-3 rounded-lg ml-5 drop-shadow-md w-28">
-				Cancel
-			</Link>
+			<div className="flex justify-between mt-4">
+				<button
+					className="bg-[#017AFF] text-white font-medium p-3 rounded-lg shadow-md shadow-[#017AFF]/30 w-full"
+					onClick={saveHandler}>
+					Save
+				</button>
+				{deleteHandler !== undefined && (
+					<button
+						className="inline-block text-center bg-red-500 text-white p-3 rounded-lg ml-6 shadow-md shadow-red-500/30 w-28"
+						onClick={deleteHandler}>
+						Delete
+					</button>
+				)}
+			</div>
 		</div>
 	);
 }

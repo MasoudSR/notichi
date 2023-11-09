@@ -14,6 +14,9 @@ export default function AddNotePage() {
 	}, []);
 
 	const saveHandler = () => {
+		if (note.title === "" && note.text === "") {
+			router.push("/");
+		}else{
 		const notes = localStorage.getItem("note") || "";
 		if (!notes) {
 			localStorage.setItem("note", JSON.stringify([note]));
@@ -22,27 +25,28 @@ export default function AddNotePage() {
 			newNotes.push(note);
 			localStorage.setItem("note", JSON.stringify(newNotes));
 		}
-		router.push("/");
+		router.push("/");}
 	};
 	return (
-		<div className="flex flex-col bg-slate-300 m-4 p-5 rounded-lg">
+		<div className="m-4 ">
 			<input
 				type="text"
-				className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+				className="block w-full p-4 text-[#232326] border-gray-300 rounded-lg border focus:outline-[#0070F2]"
 				placeholder="Title"
 				value={note.title}
 				onChange={(e) => setNote({ ...note, title: e.target.value })}
 			/>
 			<textarea
-				rows={4}
-				className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2"
+				rows={10}
+				className="border border-gray-300 text-[#232326] text-sm rounded-lg block w-full p-4 mt-2 focus:outline-[#0070F2]"
 				placeholder="Note"
 				value={note.text}
 				onChange={(e) => setNote({ ...note, text: e.target.value })}
 			/>
-			<button className="bg-sky-200 p-5 rounded-lg mt-3" onClick={saveHandler}>
+			<button className="bg-[#017AFF] text-white font-medium p-3 rounded-lg mt-3 drop-shadow w-28" onClick={saveHandler}>
 				Save
 			</button>
+			<button className="bg-white p-3 rounded-lg ml-5 drop-shadow w-20" onClick={()=>router.push("/")}>Cancel</button>
 		</div>
 	);
 }

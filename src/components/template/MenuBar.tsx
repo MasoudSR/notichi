@@ -6,7 +6,6 @@ import { LuStickyNote, LuSettings, LuFolderClosed } from "react-icons/lu";
 
 export default function MenuBar() {
 	const pathName = usePathname();
-	console.log(pathName);
 
 	return (
 		<div className="bg-white rounded-t-lg fixed bottom-0 w-screen max-w-4xl flex justify-around drop-shadow font-medium">

@@ -9,7 +9,7 @@ export default function NoteFields({
 	note: { id: string; title: string; text: string };
 	setNote: React.Dispatch<React.SetStateAction<{ id: string; title: string; text: string }>>;
 	saveHandler: React.MouseEventHandler;
-	deleteHandler: React.MouseEventHandler;
+	deleteHandler: React.MouseEventHandler | null;
 }) {
 	return (
 		<div className="m-6">
@@ -33,7 +33,7 @@ export default function NoteFields({
 					onClick={saveHandler}>
 					Save
 				</button>
-				{deleteHandler !== undefined && (
+				{deleteHandler !== null && (
 					<button
 						className="inline-block text-center bg-red-500 text-white p-3 rounded-lg ml-6 shadow-md shadow-red-500/30 w-28"
 						onClick={deleteHandler}>

@@ -29,5 +29,5 @@ export default function AddNotePage() {
 			router.push("/");
 		}
 	};
-	return <NoteFields note={note} setNote={setNote} saveHandler={saveHandler} />;
+	return <NoteFields note={note} setNote={setNote} saveHandler={saveHandler} deleteHandler={null} />;
 }

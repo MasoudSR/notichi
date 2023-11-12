@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import NoteFields from "../module/NoteFields";
+import loadStorage from "@/helpers/loadStorage";
+import saveStorage from "@/helpers/saveStorage";
 
 export default function NoteDetailsPage() {
 	const router = useRouter();
@@ -10,31 +12,30 @@ export default function NoteDetailsPage() {
 	const [note, setNote] = useState<{ id: string; title: string; text: string }>({ id: "", title: "", text: "" });
 
 	const saveHandler = () => {
-		const notes = JSON.parse(localStorage.getItem("note") || "");
-		const index = notes.findIndex((item: { id: string }) => item.id === note.id);
-		notes.splice(index, 1, note);
-		localStorage.setItem("note", JSON.stringify(notes));
+		const data = loadStorage();
+		const index = data.notes.findIndex((item: { id: string }) => item.id === note.id);
+		data.notes.splice(index, 1, note);
+		saveStorage(data);
 		router.push("/");
 	};
 
 	const deleteHandler = () => {
-		const notes = JSON.parse(localStorage.getItem("note") || "");
-		const index = notes.findIndex((item: { id: string }) => item.id === note.id);
-		notes.splice(index, 1);
-		localStorage.setItem("note", JSON.stringify(notes));
+		const data = loadStorage();
+		const index = data.notes.findIndex((item: { id: string }) => item.id === note.id);
+		data.notes.splice(index, 1);
+		saveStorage(data);
 		router.push("/");
 	};
 
 	useEffect(() => {
 		const { noteId } = params;
-		const notes = JSON.parse(localStorage.getItem("note") || "");
-		const oldNote = notes.find((note: { id: string; title: string; text: string }) => note.id === noteId);
+		const data = loadStorage();
+		const oldNote = data.notes.find((note: { id: string; title: string; text: string }) => note.id === noteId);
 		setNote(oldNote);
 	}, []);
 	return (
 		<>
 			<NoteFields note={note} setNote={setNote} saveHandler={saveHandler} deleteHandler={deleteHandler} />
-			
 		</>
 	);
 }

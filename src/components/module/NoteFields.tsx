@@ -1,4 +1,5 @@
 import React from "react";
+import AddToFolder from "./AddToFolder";
 export default function NoteFields({
 	note,
 	setNote,
@@ -40,6 +41,7 @@ export default function NoteFields({
 					</button>
 				)}
 			</div>
+			{/* <AddToFolder noteId={note.id} /> */}
 		</div>
 	);
 }

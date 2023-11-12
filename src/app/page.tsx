@@ -1,15 +1,14 @@
 "use client";
 
 import Note from "@/components/module/Note";
+import loadStorage from "@/helpers/loadStorage";
 import { useEffect, useState } from "react";
 
 export default function Home() {
 	const [notes, setNotes] = useState<{ id: string; title: string; text: string }[]>([]);
 	useEffect(() => {
-		const notes: string | null = localStorage.getItem("note");
-		if (notes) {
-			setNotes(JSON.parse(notes));
-		}
+		const data = loadStorage()
+		setNotes(data.notes)
 	}, []);
 	return (
 		<main className="mb-28">

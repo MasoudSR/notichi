@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
+import saveStorage from "@/helpers/saveStorage";
+import loadStorage from "@/helpers/loadStorage";
 
 export default function NewFolderPage() {
 	const [folder, setFolder] = useState({ id: "", name: "", notesId: [] });
@@ -14,14 +16,9 @@ export default function NewFolderPage() {
 		if (folder.name === "") {
 			router.push("/folders");
 		} else {
-			const folders = localStorage.getItem("folders") || "";
-			if (!folders) {
-				localStorage.setItem("folders", JSON.stringify([folder]));
-			} else {
-				const newFolders: { id: string; name: string }[] = JSON.parse(folders);
-				newFolders.push(folder);
-				localStorage.setItem("folders", JSON.stringify(newFolders));
-			}
+			const data = loadStorage();
+			data.folders.push(folder);
+			saveStorage(data);
 			router.push("/folders");
 		}
 	};

@@ -5,10 +5,12 @@ import loadStorage from "@/helpers/loadStorage";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-	const [notes, setNotes] = useState<{ id: string; title: string; text: string }[]>([]);
+	const [notes, setNotes] = useState<
+		{ id: string; title: string; text: string; folderId: string; folderName: string }[]
+	>([]);
 	useEffect(() => {
-		const data = loadStorage()
-		setNotes(data.notes)
+		const data = loadStorage();
+		setNotes(data.notes);
 	}, []);
 	return (
 		<main>

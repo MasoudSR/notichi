@@ -1,5 +1,7 @@
+import FolderDetailsPage from "@/components/template/FolderDetailsPage";
+
 export default function FolderDetails() {
   return (
-    <div>FolderDetails</div>
+    <FolderDetailsPage />
   )
 }

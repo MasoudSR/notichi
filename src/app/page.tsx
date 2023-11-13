@@ -11,7 +11,7 @@ export default function Home() {
 		setNotes(data.notes)
 	}, []);
 	return (
-		<main className="mb-28">
+		<main>
 			{notes.map((note: { id: string; title: string; text: string }) => (
 				<Note key={note.id} id={note.id} title={note.title} text={note.text} />
 			))}

@@ -25,7 +25,7 @@ export default function AddToFolder({
 		setFolders(data.folders);
 	}, []);
 	return (
-		<div className="bg-white fixed rounded-3xl w-screen max-w-4xl transition bottom-0 z-20 h-[50%] p-6 drop-shadow">
+		<div className="bg-white fixed rounded-3xl w-screen max-w-4xl bottom-0 z-20 h-[70%] p-6 drop-shadow overflow-y-auto flex flex-wrap pb-24">
 			{folders.map((folder) => (
 				<button
 					key={folder.id}

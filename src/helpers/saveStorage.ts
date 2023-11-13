@@ -1,5 +1,11 @@
-export default function saveStorage(data : {updatedAt : Date ; notes:[] ; folders:[]}[]) {
-    const newDate = new Date()
-    data.updatedAt = newDate
-    localStorage.setItem("data" , JSON.stringify(data))
+type DataType = {
+	updatedAt: string | Date;
+	notes: { id: string; title: string; text: string; folderId: string; folderName: string }[];
+	folders: { id: string; name: string; notesId: string[] }[];
+};
+
+export default function saveStorage(data: DataType) {
+	const newDate = new Date();
+	data.updatedAt = newDate;
+	localStorage.setItem("data", JSON.stringify(data));
 }

@@ -6,9 +6,16 @@ import { nanoid } from "nanoid";
 import NoteFields from "../module/NoteFields";
 import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
+import { addToFolder } from "@/helpers/folderManager";
 
 export default function AddNotePage() {
-	const [note, setNote] = useState<{ id: string; title: string; text: string }>({ id: "", title: "", text: "" });
+	const [note, setNote] = useState<{ id: string; title: string; text: string; folderId: string; folderName: string }>({
+		id: "",
+		title: "",
+		text: "",
+		folderId: "",
+		folderName: "",
+	});
 	const router = useRouter();
 
 	useEffect(() => {
@@ -21,6 +28,7 @@ export default function AddNotePage() {
 			router.push("/");
 		} else {
 			const data = loadStorage();
+			addToFolder(data, note.id, note.folderId);
 			data.notes.push(note);
 			saveStorage(data);
 			router.push("/");

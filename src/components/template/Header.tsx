@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { CgFileAdd, CgFolderAdd } from "react-icons/cg";
+import { CgFileAdd } from "react-icons/cg";
 import { BiArrowBack } from "react-icons/bi";
+import { LuFolderPlus } from "react-icons/lu";
 
 export default function Header() {
 	const pathName = usePathname();
@@ -24,7 +25,7 @@ export default function Header() {
 			<span className="flex">
 				{pathName === "/folders" && (
 					<Link href="/folders/new" className="mr-3">
-						<CgFolderAdd size={27} />
+						<LuFolderPlus size={27} />
 					</Link>
 				)}
 				<Link href="/add">

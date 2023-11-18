@@ -23,7 +23,7 @@ export default function NewFolderPage() {
 		}
 	};
 	return (
-		<div>
+		<div className="m-6">
 			<input
 				type="text"
 				className="block w-full p-4 text-[#232326] border-gray-300 rounded-lg border focus:outline-[#0070F2] caret-[#0070F2]"
@@ -32,7 +32,7 @@ export default function NewFolderPage() {
 				onChange={(e) => setFolder({ ...folder, name: e.target.value })}
 			/>
 			<button
-				className="bg-[#017AFF] text-white font-medium p-3 rounded-lg shadow-md shadow-[#017AFF]/30 w-full"
+				className="bg-[#017AFF] text-white font-medium p-3 rounded-lg shadow-md shadow-[#017AFF]/30 w-full mt-4"
 				onClick={saveHandler}>
 				Save
 			</button>

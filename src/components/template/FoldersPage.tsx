@@ -11,7 +11,7 @@ export default function FoldersPage() {
 		setFolders(data.folders);
 	}, []);
 	return (
-		<div className="flex flex-wrap justify-between mt-4">
+		<div className="grid gap-6 grid-cols-1 m-6 md:grid-cols-4 sm:grid-cols-2">
 			{folders.map((folder) => (
 				<Folder key={folder.id} id={folder.id} name={folder.name} />
 			))}

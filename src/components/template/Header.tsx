@@ -23,7 +23,7 @@ export default function Header() {
 			</div>
 			<span className="flex">
 				{pathName === "/folders" && (
-					<Link href="/add" className="mr-3">
+					<Link href="/folders/new" className="mr-3">
 						<CgFolderAdd size={27} />
 					</Link>
 				)}

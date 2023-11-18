@@ -15,7 +15,6 @@ export default function FoldersPage() {
 			{folders.map((folder) => (
 				<Folder key={folder.id} id={folder.id} name={folder.name} />
 			))}
-			<Folder id="new" name="NewFolder+" />
 		</div>
 	);
 }

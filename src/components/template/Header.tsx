@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { CgFileAdd } from "react-icons/cg";
+import { CgFileAdd, CgFolderAdd } from "react-icons/cg";
 import { BiArrowBack } from "react-icons/bi";
 
 export default function Header() {
@@ -21,8 +21,13 @@ export default function Header() {
 				)}
 				<span className="text-3xl">Notichi</span>
 			</div>
-			<span>
-				<Link href="/add" className="flex items-center">
+			<span className="flex">
+				{pathName === "/folders" && (
+					<Link href="/add" className="mr-3">
+						<CgFolderAdd size={27} />
+					</Link>
+				)}
+				<Link href="/add">
 					<CgFileAdd size={27} />
 				</Link>
 			</span>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddToFolder from "./AddToFolder";
+import Shadow from "./Shadow";
 
 type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
 
@@ -54,6 +55,7 @@ export default function NoteFields({
 				</div>
 			</div>
 			{showFolders && <AddToFolder note={note} setNote={setNote} setShowFolders={setShowFolders} />}
+			{showFolders && <Shadow setShowFolders={setShowFolders} />}
 		</>
 	);
 }

@@ -25,12 +25,12 @@ export default function AddToFolder({
 		setFolders(data.folders);
 	}, []);
 	return (
-		<div className="bg-white fixed rounded-3xl w-screen max-w-4xl bottom-0 z-20 h-[70%] p-6 drop-shadow overflow-y-auto flex flex-wrap pb-24">
+		<div className="bg-white fixed rounded-3xl w-screen max-w-4xl bottom-0 z-20 h-[70%] p-10 drop-shadow overflow-y-auto pb-28 grid gap-6 grid-cols-1 md:grid-cols-4 sm:grid-cols-2 no-scrollbar content-start">
 			{folders.map((folder) => (
 				<button
 					key={folder.id}
 					onClick={() => addToFolderHandler(folder)}
-					className="bg-white rounded-b-lg rounded-tr-lg m-5 drop-shadow p-8 relative text-center flex-1">
+					className="bg-white rounded-b-lg rounded-tr-lg drop-shadow p-8 relative text-center flex-1">
 					<div className="absolute left-0 -top-2 h-4 max-w-[40%] w-full bg-white rounded-t-lg"></div>
 					{folder.name}
 				</button>

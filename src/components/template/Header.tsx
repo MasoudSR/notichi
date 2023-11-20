@@ -13,7 +13,7 @@ export default function Header() {
 		return paths.includes(pathName);
 	};
 	return (
-		<div className="flex justify-between font-bold items-center align-middle pl-12 pr-9 py-5 bg-[#fed700] rounded-b-xl sticky top-0 drop-shadow z-10 backdrop-blur-sm">
+		<div className="flex justify-between font-bold items-center align-middle pl-12 pr-9 py-5 bg-[#fed700] lg:rounded-b-3xl sticky top-0 drop-shadow z-10">
 			<div className="flex items-center">
 				{!pathCheck() && (
 					<button className="absolute left-3" onClick={router.back}>

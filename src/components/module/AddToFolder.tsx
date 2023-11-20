@@ -1,5 +1,7 @@
 import loadStorage from "@/helpers/loadStorage";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { LuFolderPlus } from "react-icons/lu";
 
 type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
 type FolderType = { id: string; name: string; notesId: string[] };
@@ -35,6 +37,11 @@ export default function AddToFolder({
 					{folder.name}
 				</button>
 			))}
+			{folders.length === 0 && (
+				<Link href="/folders/new" className="mr-3 flex justify-center items-end ">
+					<LuFolderPlus size={27} />Create New Folder
+				</Link>
+			)}
 		</div>
 	);
 }

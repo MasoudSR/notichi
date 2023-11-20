@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
  
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Notichi NoteBook App',
+    name: 'Notichi',
     short_name: 'Notichi',
     description: 'Notichi, a NoteBook App',
     start_url: '/',

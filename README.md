@@ -7,4 +7,4 @@ search between notes <br />
 sync notes with cloud (soon) <br />
 progressive web application (soon)
 
-<a href="notichi.netlify.app" target="_blank">try Notichi app</a>
+<a href="http://notichi.netlify.app" target="_blank">try Notichi app</a>

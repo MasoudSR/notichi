@@ -28,14 +28,13 @@ export default function SettingsPage() {
 				}),
 				{
 					pending: "Sync in Progress",
-					success: "Data Synced Successfully",
-					error: "Error in Synchronizing Data",
 				}
 			);
 			const syncedData = await res.json();
 			saveStorage(syncedData);
+			toast.success("Data Synced Successfully")
 		} catch (error) {
-			console.log(error);
+			toast.error("Error in Synchronizing Data")
 		}
 	};
 

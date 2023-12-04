@@ -13,10 +13,13 @@ export async function POST(req: Request) {
 	}
 	
 	const email = session.user?.email;
-	console.log(email)
 	const body = await req.json();
 
-	await connectMongoDB();
+	try {
+		await connectMongoDB();
+	} catch (error) {
+		return Response.json({ error: "internal server error" }, { status: 500 });
+	}
 	const user = await User.findOne({email:email});
 
 	const removedItems = body.removedItems;

@@ -4,8 +4,11 @@ import "./globals.css";
 import MenuBar from "@/components/template/MenuBar";
 import Header from "@/components/template/Header";
 import { Providers } from "./provider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 const inter = Inter({ subsets: ["latin"] });
+
 
 export const metadata: Metadata = {
 	title: "Notichi",
@@ -27,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<Header />
 				{children}
 				<MenuBar />
+				<ToastContainer />
 				</Providers>
 			</body>
 		</html>

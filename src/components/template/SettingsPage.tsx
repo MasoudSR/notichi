@@ -4,6 +4,7 @@ import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 export default function SettingsPage() {
 	// const syncHandler = (checkbox: any) => {
@@ -19,17 +20,23 @@ export default function SettingsPage() {
 	const syncHandler = async () => {
 		const data = loadStorage();
 		try {
-			const res = await fetch("/api/cloud", {
-				method: "POST",
-				headers: { "Content-Type": "application-json" },
-				body: JSON.stringify(data),
-			});
-			const syncedData = await res.json()
-			saveStorage(syncedData)
+			const res = await toast.promise(
+				fetch("/api/cloud", {
+					method: "POST",
+					headers: { "Content-Type": "application-json" },
+					body: JSON.stringify(data),
+				}),
+				{
+					pending: "Sync in Progress",
+					success: "Data Synced Successfully",
+					error: "Error in Synchronizing Data",
+				}
+			);
+			const syncedData = await res.json();
+			saveStorage(syncedData);
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
-		
 	};
 
 	return (

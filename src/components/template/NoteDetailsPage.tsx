@@ -40,6 +40,9 @@ export default function NoteDetailsPage() {
 		data.notes.splice(index, 1);
 
 		data.folders.notesId;
+
+		data.removedItems.push(note.id)
+
 		saveStorage(data);
 		router.push("/");
 	};

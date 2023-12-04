@@ -46,6 +46,7 @@ export default function EditFolderPage() {
 			return note;
 		});
 		data.notes = newNotes;
+		data.removedItems.push(folder.id)
 		saveStorage(data);
 		router.push(`/folders/`);
 	};

@@ -16,6 +16,7 @@ const userSchema = new Schema({
 		updatedAt: String,
 		folders: [],
 		notes: [],
+		removedItems:[]
 	},
 });
 

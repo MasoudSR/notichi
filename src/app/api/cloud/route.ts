@@ -1,23 +1,42 @@
-import {getServerSession } from "next-auth/next"
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
-import { connectMongoDB } from "@/app/lib/mongodb";
-import User from "@/app/models/user";
+import { connectMongoDB } from "@/lib/mongodb";
+import User from "@/models/user";
 
-export async function POST(req : NextApiRequest) {
-    const session = await getServerSession(authOptions)
-    const {email} = session
-    const body = await req.json()
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-  }
+type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
+type FolderType = { id: string; name: string; notesId: string[] };
 
-await connectMongoDB()
-  const user = await User.findOne(email)
-  user.data = body
-  await user.save() 
-  return NextResponse.json({
-    message: 'Success',
-  })
+export async function POST(req: Request) {
+	const session = await getServerSession(authOptions);
+	if (!session) {
+		return Response.json({ error: "Unauthorized" }, { status: 401 });
+	}
+	
+	const email = session.user?.email;
+	console.log(email)
+	const body = await req.json();
+
+	await connectMongoDB();
+	const user = await User.findOne({email:email});
+
+	const removedItems = body.removedItems;
+
+	const newNotes = user.data.notes.filter((note:NoteType) => !removedItems.includes(note.id));
+	const filteredNotes = newNotes.filter((note:NoteType) => {
+		const isExist = body.notes.findIndex((n:NoteType) => n.id === note.id);
+		return isExist === -1 && true;
+	});
+	filteredNotes.push(...body.notes);
+
+	const newFolders = user.data.folders.filter((folder:FolderType) => !removedItems.includes(folder.id));
+	const filteredFolders = newFolders.filter((folder:FolderType) => {
+		const isExist = body.folders.findIndex((f:FolderType) => f.id === folder.id);
+		return isExist === -1 && true;
+	});
+	filteredFolders.push(...body.folders);
+
+	user.data.notes = filteredNotes;
+	user.data.folders = filteredFolders;
+	await user.save();
+	return Response.json(user.data);
 }

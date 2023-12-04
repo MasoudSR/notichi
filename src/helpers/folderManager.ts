@@ -2,6 +2,7 @@ type DataType = {
 	updatedAt: string | Date;
 	notes: { id: string; title: string; text: string; folderId: string; folderName: string }[];
 	folders: { id: string; name: string; notesId: string[] }[];
+	removedItems: string[];
 };
 type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
 

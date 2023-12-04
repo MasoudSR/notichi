@@ -1,6 +1,7 @@
 "use client";
 
 import loadStorage from "@/helpers/loadStorage";
+import saveStorage from "@/helpers/saveStorage";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 
@@ -15,15 +16,21 @@ export default function SettingsPage() {
 
 	const { status, data: session } = useSession();
 
-const syncHandler = async ()=>{
-	const data = loadStorage()
-	console.log(data)
-const res = await fetch("/api/cloud",{
-	method:"POST",
-	headers : {"Content-Type":"application-json"},
-	body:JSON.stringify(data)
-})
-}
+	const syncHandler = async () => {
+		const data = loadStorage();
+		try {
+			const res = await fetch("/api/cloud", {
+				method: "POST",
+				headers: { "Content-Type": "application-json" },
+				body: JSON.stringify(data),
+			});
+			const syncedData = await res.json()
+			saveStorage(syncedData)
+		} catch (error) {
+			console.log(error)
+		}
+		
+	};
 
 	return (
 		<div>
@@ -37,11 +44,11 @@ const res = await fetch("/api/cloud",{
 						</div>
 					</div>
 					<div className="w-full border-t flex p-4 gap-4">
-					<button
-						className="bg-[#017AFF] text-white font-medium p-3 rounded-lg shadow-md shadow-[#017AFF]/30 w-full"
-						onClick={syncHandler}>
-						Save to Cloud
-					</button>
+						<button
+							className="bg-[#017AFF] text-white font-medium p-3 rounded-lg shadow-md shadow-[#017AFF]/30 w-full"
+							onClick={syncHandler}>
+							Sync with Cloud
+						</button>
 						<button
 							className="text-center bg-red-500 text-white p-3 rounded-lg shadow-md shadow-red-500/30 w-80"
 							onClick={() => signOut()}>

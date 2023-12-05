@@ -6,6 +6,7 @@ import NoteFields from "../module/NoteFields";
 import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
 import { addToFolder, deleteFromFolder } from "@/helpers/folderManager";
+import { toast } from "react-toastify";
 
 export default function NoteDetailsPage() {
 	const router = useRouter();
@@ -27,7 +28,7 @@ export default function NoteDetailsPage() {
 		const index = data.notes.findIndex((item: { id: string }) => item.id === note.id);
 		data.notes.splice(index, 1, note);
 		saveStorage(data);
-
+		toast.success("Note Edited Successfully")
 		router.push("/");
 	};
 
@@ -44,6 +45,7 @@ export default function NoteDetailsPage() {
 		data.removedItems.push(note.id)
 
 		saveStorage(data);
+		toast.success("Note Removed Successfully")
 		router.push("/");
 	};
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import saveStorage from "@/helpers/saveStorage";
 import loadStorage from "@/helpers/loadStorage";
+import { toast } from "react-toastify";
 
 type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
 type FolderType = { id: string; name: string; notesId: string[] };
@@ -30,6 +31,7 @@ export default function EditFolderPage() {
 			data.notes = newNotes;
 
 			saveStorage(data);
+			toast.success("Folder Edited Successfully")
 			router.push(`/folders/${param.folderId}`);
 		}
 	};
@@ -48,6 +50,7 @@ export default function EditFolderPage() {
 		data.notes = newNotes;
 		data.removedItems.push(folder.id)
 		saveStorage(data);
+		toast.success("Folder Removed Successfully")
 		router.push(`/folders/`);
 	};
 	return (

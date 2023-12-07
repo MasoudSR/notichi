@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 import saveStorage from "@/helpers/saveStorage";
 import loadStorage from "@/helpers/loadStorage";
+import { toast } from "react-toastify";
 
 export default function NewFolderPage() {
 	const [folder, setFolder] = useState({ id: "", name: "", notesId: [] });
@@ -19,6 +20,7 @@ export default function NewFolderPage() {
 			const data = loadStorage();
 			data.folders.push(folder);
 			saveStorage(data);
+			toast.success("Folder Created")
 			router.push("/folders");
 		}
 	};

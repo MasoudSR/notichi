@@ -19,7 +19,7 @@ export default function EditFolderPage() {
 	}, []);
 	const saveHandler = () => {
 		if (folder.name === "") {
-			alert("folder name can't empty");
+			toast.error("folder name can't empty")
 		} else {
 			const data = loadStorage();
 			const folderIndex = data.folders.findIndex((item: FolderType) => item.id === folder.id);
@@ -32,7 +32,7 @@ export default function EditFolderPage() {
 
 			saveStorage(data);
 			toast.success("Folder Edited Successfully")
-			router.push(`/folders/${param.folderId}`);
+			router.replace(`/folders/${param.folderId}`);
 		}
 	};
 
@@ -51,7 +51,7 @@ export default function EditFolderPage() {
 		data.removedItems.push(folder.id)
 		saveStorage(data);
 		toast.success("Folder Removed Successfully")
-		router.push(`/folders/`);
+		router.replace(`/folders/`);
 	};
 	return (
 		<div className="m-6">

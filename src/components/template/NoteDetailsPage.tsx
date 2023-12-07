@@ -29,7 +29,7 @@ export default function NoteDetailsPage() {
 		data.notes.splice(index, 1, note);
 		saveStorage(data);
 		toast.success("Note Edited Successfully")
-		router.push("/");
+		router.replace("/");
 	};
 
 	const deleteHandler = () => {
@@ -46,7 +46,7 @@ export default function NoteDetailsPage() {
 
 		saveStorage(data);
 		toast.success("Note Removed Successfully")
-		router.push("/");
+		router.replace("/");
 	};
 
 	useEffect(() => {

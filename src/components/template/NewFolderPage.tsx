@@ -15,13 +15,13 @@ export default function NewFolderPage() {
 	}, []);
 	const saveHandler = () => {
 		if (folder.name === "") {
-			router.push("/folders");
+			router.replace("/folders");
 		} else {
 			const data = loadStorage();
 			data.folders.push(folder);
 			saveStorage(data);
 			toast.success("Folder Created")
-			router.push("/folders");
+			router.replace("/folders");
 		}
 	};
 	return (

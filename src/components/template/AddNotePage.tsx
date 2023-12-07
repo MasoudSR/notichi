@@ -26,14 +26,14 @@ export default function AddNotePage() {
 
 	const saveHandler = () => {
 		if (note.title === "" && note.text === "") {
-			router.push("/");
+			router.replace("/");
 		} else {
 			const data = loadStorage();
 			addToFolder(data, note.id, note.folderId);
 			data.notes.push(note);
 			saveStorage(data);
 			toast.success("Note Added Successfully")
-			router.push("/");
+			router.replace("/");
 		}
 	};
 	return <NoteFields note={note} setNote={setNote} saveHandler={saveHandler} deleteHandler={null} />;

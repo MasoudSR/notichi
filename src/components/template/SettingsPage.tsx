@@ -32,9 +32,9 @@ export default function SettingsPage() {
 			);
 			const syncedData = await res.json();
 			saveStorage(syncedData);
-			toast.success("Data Synced Successfully")
+			toast.success("Data Synced Successfully");
 		} catch (error) {
-			toast.error("Error in Synchronizing Data")
+			toast.error("Error in Synchronizing Data");
 		}
 	};
 
@@ -63,14 +63,19 @@ export default function SettingsPage() {
 					</div>
 				</div>
 			)}
-			<div className="m-6 font-medium text-xl bg-white rounded-lg flex justify-center">
+			<div className="m-6 font-medium text-xl bg-white rounded-lg">
 				{status === "loading" ? (
 					<span className="border-4 border-t-orange-300 animate-spin h-8 w-8 m-3 block rounded-full" />
 				) : (
 					status !== "authenticated" && (
-						<button className="w-full py-3 px-5" onClick={() => signIn("github")}>
-							sign in with github
-						</button>
+						<div>
+							<button className="w-full py-3 px-5" onClick={() => signIn("github")}>
+								sign in with github
+							</button>
+							<button className="w-full py-3 px-5 border-t" onClick={() => signIn("google")}>
+								sign in with google (beta)
+							</button>
+						</div>
 					)
 				)}
 			</div>

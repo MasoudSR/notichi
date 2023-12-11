@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
 import NoteFields from "../module/NoteFields";
 import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
 import { addToFolder, deleteFromFolder } from "@/helpers/folderManager";
 import { toast } from "react-toastify";
+import { Context } from "@/app/provider";
 
 export default function NoteDetailsPage() {
-	const router = useRouter();
-	const params = useParams();
+	const { setPageName, pageId } = useContext(Context);
+
 	const [note, setNote] = useState<{ id: string; title: string; text: string; folderId: string; folderName: string }>({
 		id: "",
 		title: "",
@@ -28,8 +28,8 @@ export default function NoteDetailsPage() {
 		const index = data.notes.findIndex((item: { id: string }) => item.id === note.id);
 		data.notes.splice(index, 1, note);
 		saveStorage(data);
-		toast.success("Note Edited Successfully")
-		router.replace("/");
+		toast.success("Note Edited Successfully");
+		setPageName("notes");
 	};
 
 	const deleteHandler = () => {
@@ -42,17 +42,16 @@ export default function NoteDetailsPage() {
 
 		data.folders.notesId;
 
-		data.removedItems.push(note.id)
+		data.removedItems.push(note.id);
 
 		saveStorage(data);
-		toast.success("Note Removed Successfully")
-		router.replace("/");
+		toast.success("Note Removed Successfully");
+		setPageName("notes");
 	};
 
 	useEffect(() => {
-		const { noteId } = params;
 		const data = loadStorage();
-		const oldNote = data.notes.find((note: { id: string; title: string; text: string }) => note.id === noteId);
+		const oldNote = data.notes.find((note: { id: string; title: string; text: string }) => note.id === pageId);
 		setNote(oldNote);
 	}, []);
 	return (

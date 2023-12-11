@@ -1,25 +1,24 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
 import saveStorage from "@/helpers/saveStorage";
 import loadStorage from "@/helpers/loadStorage";
 import { toast } from "react-toastify";
+import { Context } from "@/app/provider";
 
 type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
 type FolderType = { id: string; name: string; notesId: string[] };
 
 export default function EditFolderPage() {
+	const { pageId, setPageName } = useContext(Context);
 	const [folder, setFolder] = useState({ id: "", name: "", notesId: [] });
-	const router = useRouter();
-	const param = useParams();
 	useEffect(() => {
 		const data = loadStorage();
-		const oldFolder = data.folders.find((item: FolderType) => item.id === param.folderId);
+		const oldFolder = data.folders.find((item: FolderType) => item.id === pageId);
 		setFolder(oldFolder);
 	}, []);
 	const saveHandler = () => {
 		if (folder.name === "") {
-			toast.error("folder name can't empty")
+			toast.error("folder name can't empty");
 		} else {
 			const data = loadStorage();
 			const folderIndex = data.folders.findIndex((item: FolderType) => item.id === folder.id);
@@ -31,8 +30,8 @@ export default function EditFolderPage() {
 			data.notes = newNotes;
 
 			saveStorage(data);
-			toast.success("Folder Edited Successfully")
-			router.replace(`/folders/${param.folderId}`);
+			toast.success("Folder Edited Successfully");
+			setPageName("folder");
 		}
 	};
 
@@ -48,10 +47,10 @@ export default function EditFolderPage() {
 			return note;
 		});
 		data.notes = newNotes;
-		data.removedItems.push(folder.id)
+		data.removedItems.push(folder.id);
 		saveStorage(data);
-		toast.success("Folder Removed Successfully")
-		router.replace(`/folders/`);
+		toast.success("Folder Removed Successfully");
+		setPageName("folders");
 	};
 	return (
 		<div className="m-6">

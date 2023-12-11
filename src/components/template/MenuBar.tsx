@@ -1,38 +1,38 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import { LuStickyNote, LuSettings, LuFolderClosed } from "react-icons/lu";
+import { Context } from "@/app/provider";
+import { useContext } from "react";
 
 export default function MenuBar() {
-	const pathName = usePathname();
+	const { pageName, setPageName } = useContext(Context);
 
 	return (
 		<div className="bg-white lg:rounded-t-3xl fixed bottom-0 w-screen max-w-4xl flex justify-around drop-shadow font-medium backdrop-blur-sm z-20">
-			<Link
-				href="/"
+			<button
 				className={`w-32 p-4 pb-3 m-3 rounded-lg flex flex-col items-center hover:bg-blue-50 ${
-					pathName === "/" && "text-[#0265dc]"
-				} `}>
+					pageName === "notes" && "text-[#0265dc]"
+				}`}
+				onClick={() => setPageName!("notes")}>
 				<LuStickyNote />
 				All
-			</Link>
-			<Link
-				href="/folders"
+			</button>
+			<button
 				className={`w-32 p-4 pb-3 m-3 rounded-lg flex flex-col items-center hover:bg-blue-50 ${
-					pathName === "/folders" && "text-[#0265dc]"
-				} `}>
+					pageName === "folders" && "text-[#0265dc]"
+				}`}
+				onClick={() => setPageName!("folders")}>
 				<LuFolderClosed />
 				Folders
-			</Link>
-			<Link
-				href="/settings"
-				className={`w-32 p-4 pb-3 m-3 rounded-lg  flex flex-col items-center hover:bg-blue-50 ${
-					pathName === "/settings" && "text-[#0265dc]"
-				}`}>
+			</button>
+			<button
+				className={`w-32 p-4 pb-3 m-3 rounded-lg flex flex-col items-center hover:bg-blue-50 ${
+					pageName === "settings" && "text-[#0265dc]"
+				}`}
+				onClick={() => setPageName!("settings")}>
 				<LuSettings />
-				Settings
-			</Link>
+				settings
+			</button>
 		</div>
 	);
 }

@@ -1,27 +1,27 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import { useRouter } from "next/navigation";
 import saveStorage from "@/helpers/saveStorage";
 import loadStorage from "@/helpers/loadStorage";
 import { toast } from "react-toastify";
+import { Context } from "@/app/provider";
 
 export default function NewFolderPage() {
+	const { pageName, setPageName } = useContext(Context);
 	const [folder, setFolder] = useState({ id: "", name: "", notesId: [] });
-	const router = useRouter();
 	useEffect(() => {
 		const id: string = nanoid();
 		setFolder({ ...folder, id });
 	}, []);
 	const saveHandler = () => {
 		if (folder.name === "") {
-			router.replace("/folders");
+			setPageName("folders");
 		} else {
 			const data = loadStorage();
 			data.folders.push(folder);
 			saveStorage(data);
-			toast.success("Folder Created")
-			router.replace("/folders");
+			toast.success("Folder Created");
+			setPageName("folders");
 		}
 	};
 	return (

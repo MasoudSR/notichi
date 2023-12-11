@@ -1,6 +1,6 @@
+import { Context } from "@/app/provider";
 import loadStorage from "@/helpers/loadStorage";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LuFolderPlus } from "react-icons/lu";
 
 type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
@@ -15,6 +15,7 @@ export default function AddToFolder({
 	setNote: React.Dispatch<React.SetStateAction<NoteType>>;
 	setShowFolders: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+	const { setPageName } = useContext(Context);
 	const [folders, setFolders] = useState<FolderType[]>([]);
 
 	const addToFolderHandler = (folder: FolderType) => {
@@ -38,9 +39,14 @@ export default function AddToFolder({
 				</button>
 			))}
 			{folders.length === 0 && (
-				<Link href="/folders/new" className="mr-3 flex justify-center items-end ">
-					<LuFolderPlus size={27} />Create New Folder
-				</Link>
+				<div
+					onClick={() => {
+						setPageName("addFolder");
+					}}
+					className="mr-3 flex justify-center items-end cursor-pointer">
+					<LuFolderPlus size={27} />
+					Create New Folder
+				</div>
 			)}
 		</div>
 	);

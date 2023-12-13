@@ -46,7 +46,7 @@ export default function SettingsPage() {
 						<Image src={session?.user?.image!} alt={session?.user?.name!} width={70} height={70} />
 						<div className="flex flex-col">
 							<span>{session?.user?.name}</span>
-							<span className="font-light">{session?.user?.email}</span>
+							<span className="font-light whitespace-pre-line truncate text-[#8A8A8E]">{session?.user?.email}</span>
 						</div>
 					</div>
 					<div className="w-full border-t flex p-4 gap-4">

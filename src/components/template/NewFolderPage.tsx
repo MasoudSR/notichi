@@ -8,22 +8,32 @@ import { Context } from "@/app/provider";
 
 export default function NewFolderPage() {
 	const { pageName, setPageName } = useContext(Context);
-	const [folder, setFolder] = useState({ id: "", name: "", notesId: [] });
+	const [folder, setFolder] = useState<{ id: string; updatedAt: Date | string; name: string; notesId: [] }>({
+		id: "",
+		updatedAt: "",
+		name: "",
+		notesId: [],
+	});
+
 	useEffect(() => {
 		const id: string = nanoid();
 		setFolder({ ...folder, id });
 	}, []);
+
 	const saveHandler = () => {
 		if (folder.name === "") {
 			setPageName("folders");
 		} else {
 			const data = loadStorage();
+			const newDate = new Date();
+			folder.updatedAt = newDate;
 			data.folders.push(folder);
 			saveStorage(data);
 			toast.success("Folder Created");
 			setPageName("folders");
 		}
 	};
+
 	return (
 		<div className="m-6">
 			<input

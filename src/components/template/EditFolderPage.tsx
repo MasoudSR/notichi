@@ -5,21 +5,33 @@ import loadStorage from "@/helpers/loadStorage";
 import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
 
-type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
-type FolderType = { id: string; name: string; notesId: string[] };
+type NoteType = {
+	id: string;
+	updatedAt: string | Date;
+	title: string;
+	text: string;
+	folderId: string;
+	folderName: string;
+};
+type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function EditFolderPage() {
 	const { pageId, setPageName } = useContext(Context);
-	const [folder, setFolder] = useState({ id: "", name: "", notesId: [] });
+	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
+
 	useEffect(() => {
 		const data = loadStorage();
 		const oldFolder = data.folders.find((item: FolderType) => item.id === pageId);
 		setFolder(oldFolder);
 	}, []);
+
 	const saveHandler = () => {
 		if (folder.name === "") {
 			toast.error("folder name can't empty");
 		} else {
+			const newDate = new Date();
+			folder.updatedAt = newDate;
+
 			const data = loadStorage();
 			const folderIndex = data.folders.findIndex((item: FolderType) => item.id === folder.id);
 			data.folders.splice(folderIndex, 1, folder);
@@ -43,6 +55,8 @@ export default function EditFolderPage() {
 			if (note.folderId === folder.id) {
 				note.folderName = "";
 				note.folderId = "";
+				const newDate = new Date();
+				note.updatedAt = newDate;
 			}
 			return note;
 		});

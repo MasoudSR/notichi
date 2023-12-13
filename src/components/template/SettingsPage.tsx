@@ -79,6 +79,11 @@ export default function SettingsPage() {
 					)
 				)}
 			</div>
+			<div className="m-6 font-medium text-xl bg-red-500 text-white p-3 rounded-lg shadow-md shadow-red-500/30 w-80">
+				<button className="w-full py-3 px-5" onClick={() => localStorage.removeItem("data")}>
+					Clear Local Storage
+				</button>
+			</div>
 			{/* <div className="m-6 font-medium text-xl flex justify-between bg-white rounded-lg py-3 px-5 items-center">
 				<span>Sync Notes (soon)</span>
 				<label className="relative flex justify-between items-center p-2 text-xl">

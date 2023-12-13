@@ -5,7 +5,7 @@ import Folder from "../module/Folder";
 import { useEffect, useState } from "react";
 
 export default function FoldersPage() {
-	const [folders, setFolders] = useState<{ id: string; name: string; notesId: [] }[]>([]);
+	const [folders, setFolders] = useState<{ id: string; updatedAt: string | Date; name: string; notesId: [] }[]>([]);
 	useEffect(() => {
 		const data = loadStorage();
 		setFolders(data.folders);

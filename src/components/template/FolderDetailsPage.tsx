@@ -5,13 +5,20 @@ import { useContext, useEffect, useState } from "react";
 import Note from "../module/Note";
 import { Context } from "@/app/provider";
 
-type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
-type FolderType = { id: string; name: string; notesId: string[] };
+type NoteType = {
+	id: string;
+	updatedAt: string | Date;
+	title: string;
+	text: string;
+	folderId: string;
+	folderName: string;
+};
+type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function FolderDetailsPage() {
 	const { pageId, setPageName } = useContext(Context);
 	const [notes, setNotes] = useState<NoteType[]>([]);
-	const [folder, setFolder] = useState<FolderType>({ id: "", name: "", notesId: [] });
+	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
 	useEffect(() => {
 		const data = loadStorage();
 		const folderNotes = data.notes.filter((note: NoteType) => note.folderId === pageId);

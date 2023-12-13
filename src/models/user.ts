@@ -16,8 +16,9 @@ const userSchema = new Schema({
 		updatedAt: String,
 		folders: [],
 		notes: [],
-		removedItems:[]
+		removedItems: [],
 	},
+	removedItems: [],
 });
 
 const User = models.User || mongoose.model("User", userSchema);

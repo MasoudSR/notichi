@@ -3,8 +3,15 @@ import loadStorage from "@/helpers/loadStorage";
 import React, { useContext, useEffect, useState } from "react";
 import { LuFolderPlus } from "react-icons/lu";
 
-type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
-type FolderType = { id: string; name: string; notesId: string[] };
+type NoteType = {
+	id: string;
+	updatedAt: Date | string;
+	title: string;
+	text: string;
+	folderId: string;
+	folderName: string;
+};
+type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function AddToFolder({
 	note,

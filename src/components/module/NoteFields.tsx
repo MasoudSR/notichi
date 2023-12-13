@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import AddToFolder from "./AddToFolder";
 import Shadow from "./Shadow";
 
-type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
+type NoteType = {
+	id: string;
+	updatedAt: Date | string;
+	title: string;
+	text: string;
+	folderId: string;
+	folderName: string;
+};
 
 export default function NoteFields({
 	note,

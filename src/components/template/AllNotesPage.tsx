@@ -6,10 +6,17 @@ import React, { useEffect, useState } from "react";
 
 type DataType = {
 	updatedAt: string | Date;
-	notes: { id: string; title: string; text: string; folderId: string; folderName: string }[];
-	folders: { id: string; name: string; notesId: string[] }[];
+	notes: { id: string; updatedAt: string | Date; title: string; text: string; folderId: string; folderName: string }[];
+	folders: { id: string; updatedAt: string | Date; name: string; notesId: string[] }[];
 };
-type NoteType = { id: string; title: string; text: string; folderId: string; folderName: string };
+type NoteType = {
+	id: string;
+	updatedAt: string | Date;
+	title: string;
+	text: string;
+	folderId: string;
+	folderName: string;
+};
 
 export default function AllNotesPage() {
 	const [notes, setNotes] = useState<NoteType[]>([]);

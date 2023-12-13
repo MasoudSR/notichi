@@ -11,8 +11,16 @@ import { Context } from "@/app/provider";
 export default function NoteDetailsPage() {
 	const { setPageName, pageId } = useContext(Context);
 
-	const [note, setNote] = useState<{ id: string; title: string; text: string; folderId: string; folderName: string }>({
+	const [note, setNote] = useState<{
+		id: string;
+		updatedAt: Date | string;
+		title: string;
+		text: string;
+		folderId: string;
+		folderName: string;
+	}>({
 		id: "",
+		updatedAt: "",
 		title: "",
 		text: "",
 		folderId: "",
@@ -24,6 +32,9 @@ export default function NoteDetailsPage() {
 
 		deleteFromFolder(data, note.id);
 		addToFolder(data, note.id, note.folderId);
+
+		const newDate = new Date();
+		note.updatedAt = newDate;
 
 		const index = data.notes.findIndex((item: { id: string }) => item.id === note.id);
 		data.notes.splice(index, 1, note);

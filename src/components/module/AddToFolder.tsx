@@ -16,9 +16,11 @@ type FolderType = { id: string; updatedAt: string | Date; name: string; notesId:
 export default function AddToFolder({
 	note,
 	setNote,
+	showFolders,
 	setShowFolders,
 }: {
 	note: NoteType;
+	showFolders: boolean;
 	setNote: React.Dispatch<React.SetStateAction<NoteType>>;
 	setShowFolders: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -35,7 +37,10 @@ export default function AddToFolder({
 		setFolders(data.folders);
 	}, []);
 	return (
-		<div className="bg-white fixed rounded-3xl w-screen max-w-4xl bottom-0 z-20 h-[70%] p-10 drop-shadow overflow-y-auto pb-28 grid gap-6 grid-cols-1 md:grid-cols-4 sm:grid-cols-2 no-scrollbar content-start">
+		<div
+			className={`bg-white fixed rounded-3xl w-screen max-w-4xl -bottom-[70%] z-20 h-[70%] p-10 drop-shadow overflow-y-auto pb-28 grid gap-6 grid-cols-1 md:grid-cols-4 sm:grid-cols-2 no-scrollbar content-start transition-all ${
+				showFolders && "-translate-y-[100%]"
+			}`}>
 			{folders.map((folder) => (
 				<button
 					key={folder.id}

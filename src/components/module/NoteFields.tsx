@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AddToFolder from "./AddToFolder";
 import Shadow from "./Shadow";
+import { Context } from "@/app/provider";
 
 type NoteType = {
 	id: string;
@@ -23,9 +24,20 @@ export default function NoteFields({
 	deleteHandler: React.MouseEventHandler | null;
 }) {
 	const [showFolders, setShowFolders] = useState(false);
+	const { isMounted, setIsMounted } = useContext(Context);
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
+
 	return (
 		<>
-			<div className="m-6 font-medium">
+			<div
+				className={`m-6 font-medium ${
+					isMounted
+						? "animate-fade-up animate-duration-150 animate-ease-out"
+						: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+				}`}>
 				<input
 					type="text"
 					className="block w-full p-4 text-[#232326] border-gray-300 font-bold text-lg rounded-lg border focus:outline-[#0070F2] caret-[#0070F2]"
@@ -61,7 +73,7 @@ export default function NoteFields({
 					)}
 				</div>
 			</div>
-			{showFolders && <AddToFolder note={note} setNote={setNote} setShowFolders={setShowFolders} />}
+			<AddToFolder note={note} setNote={setNote} showFolders={showFolders} setShowFolders={setShowFolders} />
 			{showFolders && <Shadow setShowFolders={setShowFolders} />}
 		</>
 	);

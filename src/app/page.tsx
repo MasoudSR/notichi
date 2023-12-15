@@ -13,7 +13,6 @@ import EditFolderPage from "@/components/template/EditFolderPage";
 
 export default function Home() {
 	const { pageName } = useContext(Context);
-
 	return (
 		<div>
 			{pageName === "notes" && <AllNotesPage />}

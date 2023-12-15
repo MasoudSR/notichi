@@ -1,8 +1,9 @@
 "use client";
 
+import { Context } from "@/app/provider";
 import Note from "@/components/module/Note";
 import loadStorage from "@/helpers/loadStorage";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 type DataType = {
 	updatedAt: string | Date;
@@ -21,11 +22,13 @@ type NoteType = {
 export default function AllNotesPage() {
 	const [notes, setNotes] = useState<NoteType[]>([]);
 	const [data, setData] = useState<DataType>();
+	const { isMounted, setIsMounted } = useContext(Context);
 
 	useEffect(() => {
 		const storageData = loadStorage();
 		setData(storageData);
 		setNotes(storageData.notes);
+		setIsMounted(true);
 	}, []);
 
 	const searchHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -35,7 +38,12 @@ export default function AllNotesPage() {
 	};
 
 	return (
-		<main className="flex flex-col">
+		<main
+			className={`flex flex-col ${
+				isMounted
+					? "animate-fade-up animate-duration-150 animate-ease-out"
+					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+			}`}>
 			<div className="mx-6 mt-6">
 				<input
 					type="text"

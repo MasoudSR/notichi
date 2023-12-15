@@ -16,13 +16,14 @@ type NoteType = {
 type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function EditFolderPage() {
-	const { pageId, setPageName } = useContext(Context);
+	const { pageId, setPageName, isMounted, setIsMounted } = useContext(Context);
 	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
 
 	useEffect(() => {
 		const data = loadStorage();
 		const oldFolder = data.folders.find((item: FolderType) => item.id === pageId);
 		setFolder(oldFolder);
+		setIsMounted(true);
 	}, []);
 
 	const saveHandler = () => {
@@ -67,7 +68,12 @@ export default function EditFolderPage() {
 		setPageName("folders");
 	};
 	return (
-		<div className="m-6">
+		<div
+			className={`m-6 ${
+				isMounted
+					? "animate-fade-up animate-duration-150 animate-ease-out"
+					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+			}`}>
 			<input
 				type="text"
 				className="block w-full p-4 text-[#232326] border-gray-300 rounded-lg border focus:outline-[#0070F2] caret-[#0070F2]"

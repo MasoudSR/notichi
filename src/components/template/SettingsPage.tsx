@@ -1,9 +1,11 @@
 "use client";
 
+import { Context } from "@/app/provider";
 import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 
 export default function SettingsPage() {
@@ -16,6 +18,11 @@ export default function SettingsPage() {
 	// };
 
 	const { status, data: session } = useSession();
+	const { isMounted, setIsMounted } = useContext(Context);
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
 
 	const syncHandler = async () => {
 		const data = loadStorage();
@@ -39,7 +46,12 @@ export default function SettingsPage() {
 	};
 
 	return (
-		<div>
+		<div
+			className={`${
+				isMounted
+					? "animate-fade-up animate-duration-150 animate-ease-out"
+					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+			}`}>
 			{status === "authenticated" && (
 				<div className="m-6 font-medium text-xl bg-white rounded-lg flex flex-col justify-center">
 					<div className="flex gap-4 m-4">

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
 
 export default function NewFolderPage() {
-	const { pageName, setPageName } = useContext(Context);
+	const { pageName, setPageName, isMounted, setIsMounted } = useContext(Context);
 	const [folder, setFolder] = useState<{ id: string; updatedAt: Date | string; name: string; notesId: [] }>({
 		id: "",
 		updatedAt: "",
@@ -18,6 +18,7 @@ export default function NewFolderPage() {
 	useEffect(() => {
 		const id: string = nanoid();
 		setFolder({ ...folder, id });
+		setIsMounted(true);
 	}, []);
 
 	const saveHandler = () => {
@@ -35,7 +36,12 @@ export default function NewFolderPage() {
 	};
 
 	return (
-		<div className="m-6">
+		<div
+			className={`m-6 ${
+				isMounted
+					? "animate-fade-up animate-duration-150 animate-ease-out"
+					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+			}`}>
 			<input
 				type="text"
 				className="block w-full p-4 text-[#232326] border-gray-300 rounded-lg border focus:outline-[#0070F2] caret-[#0070F2]"

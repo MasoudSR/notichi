@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { Context } from "@/app/provider";
 
 export default function Header() {
-	const { pageName, setPageName } = useContext(Context);
+	const { pageName, setPageName, setIsMounted } = useContext(Context);
 	const pathCheck = () => {
 		const paths = ["notes", "folders", "settings"];
 		return paths.includes(pageName);
@@ -28,11 +28,21 @@ export default function Header() {
 			</div>
 			<span className="flex">
 				{pageName === "folders" && (
-					<button onClick={() => setPageName!("addFolder")} className="mr-3">
+					<button
+						onClick={() => {
+							setIsMounted(false);
+							setTimeout(() => setPageName!("addFolder"), 150);
+						}}
+						className="mr-3">
 						<LuFolderPlus size={27} />
 					</button>
 				)}
-				<button onClick={() => setPageName!("addNote")} className="mr-3">
+				<button
+					onClick={() => {
+						pageName !== "addNote" && setIsMounted(false);
+						setTimeout(() => setPageName!("addNote"), 150);
+					}}
+					className="mr-3">
 					<CgFileAdd size={27} />
 				</button>
 			</span>

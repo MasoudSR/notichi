@@ -52,30 +52,23 @@ export async function POST(req: Request) {
 				const dbNoteDate = new Date(note.updatedAt);
 				const userNoteDate = new Date(userNote.updatedAt);
 
-				if (userNoteDate > dbNoteDate) {
+				if (dbNoteDate >= userNoteDate) {
+					return note;
+				} else {
 					return userNote;
-				} else {
-					return note;
 				}
 			} else if (isExist === -1) {
 				return note;
 			}
 		});
-		newNotes = body.notes.map((note: NoteType) => {
+
+		body.notes.forEach((note: NoteType) => {
 			const isExist = newDbNotes.findIndex((n: NoteType) => n.id === note.id);
-			if (isExist >= 0) {
-				const dbNote = newDbNotes[isExist];
-				const dbNoteDate = new Date(dbNote.updatedAt);
-				const userNoteDate = new Date(note.updatedAt);
-				if (userNoteDate > dbNoteDate) {
-					return note;
-				} else {
-					return dbNote;
-				}
-			} else if (isExist === -1) {
-				return note;
+			if (isExist === -1) {
+				newDbNotes.push(note)
 			}
 		});
+		newNotes = newDbNotes
 	}
 
 	const filteredNotes = newNotes ? newNotes.filter((note: NoteType) => !removedItems.includes(note.id)) : [];
@@ -97,10 +90,10 @@ export async function POST(req: Request) {
 				const dbFolderDate = new Date(folder.updatedAt);
 				const userFolderDate = new Date(userFolder.updatedAt);
 
-				if (userFolderDate > dbFolderDate) {
-					return userFolder;
-				} else {
+				if (dbFolderDate >= userFolderDate) {
 					return folder;
+				} else {
+					return userFolder;
 				}
 			} else if (isExist === -1) {
 				return folder;
@@ -108,19 +101,11 @@ export async function POST(req: Request) {
 		});
 		newFolders = body.folders.map((folder: FolderType) => {
 			const isExist = newDbFolders.findIndex((f: FolderType) => f.id === folder.id);
-			if (isExist >= 0) {
-				const dbFolder = newDbFolders[isExist];
-				const dbFolderDate = new Date(dbFolder.updatedAt);
-				const userFolderDate = new Date(folder.updatedAt);
-				if (userFolderDate > dbFolderDate) {
-					return folder;
-				} else {
-					return dbFolder;
-				}
-			} else if (isExist === -1) {
-				return folder;
+			if (isExist === -1) {
+				newDbFolders.push(folder)
 			}
 		});
+		newFolders = newDbFolders
 	}
 
 	const filteredFolders = newFolders

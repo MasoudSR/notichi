@@ -18,7 +18,7 @@ export default function SettingsPage() {
 	// };
 
 	const { status, data: session } = useSession();
-	const { isMounted, setIsMounted } = useContext(Context);
+	const { isMounted, setIsMounted, prevPageName, selectedPageName } = useContext(Context);
 
 	useEffect(() => {
 		setIsMounted(true);
@@ -49,7 +49,11 @@ export default function SettingsPage() {
 		<div
 			className={`${
 				isMounted
-					? "animate-fade-up animate-duration-150 animate-ease-out"
+					? prevPageName === "folders" || prevPageName === "notes"
+						? "animate-fade-left animate-duration-150 animate-ease-out"
+						: "animate-fade-up animate-duration-150 animate-ease-out"
+					: selectedPageName === "folders" || selectedPageName === "notes"
+					? "animate-fade-out-right animate-duration-150 animate-ease-out"
 					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
 			}`}>
 			{status === "authenticated" && (

@@ -13,6 +13,7 @@ export const Context = createContext<{
 	setPageId: React.Dispatch<React.SetStateAction<string>>;
 	isMounted: boolean;
 	setIsMounted: React.Dispatch<React.SetStateAction<boolean>>;
+	selectedPageName: string;
 }>({
 	pageName: "notes",
 	setPageName: () => {},
@@ -23,17 +24,22 @@ export const Context = createContext<{
 	setPageId: () => {},
 	isMounted: false,
 	setIsMounted: () => {},
+	selectedPageName: "",
 });
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const [pageName, setPageName] = useState<string>("notes");
 	const [prevPageName, setPrevPageName] = useState<string>("");
+	const [selectedPageName, setSelectedPageName] = useState<string>("");
 	const [pageId, setPageId] = useState<string>("");
 	const [isMounted, setIsMounted] = useState(false);
 
 	function changePage(newPage: string) {
-		setPrevPageName(pageName);
-		setTimeout(() => setPageName!(newPage), 150);
+		setSelectedPageName(newPage);
+		setTimeout(() => {
+			setPrevPageName(pageName);
+			setPageName!(newPage);
+		}, 150);
 	}
 
 	return (
@@ -49,6 +55,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 					prevPageName,
 					setPrevPageName,
 					changePage,
+					selectedPageName,
 				}}>
 				{children}
 			</Context.Provider>

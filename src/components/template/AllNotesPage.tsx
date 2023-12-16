@@ -22,7 +22,7 @@ type NoteType = {
 export default function AllNotesPage() {
 	const [notes, setNotes] = useState<NoteType[]>([]);
 	const [data, setData] = useState<DataType>();
-	const { isMounted, setIsMounted } = useContext(Context);
+	const { isMounted, setIsMounted, prevPageName, selectedPageName } = useContext(Context);
 
 	useEffect(() => {
 		const storageData = loadStorage();
@@ -41,7 +41,11 @@ export default function AllNotesPage() {
 		<main
 			className={`flex flex-col ${
 				isMounted
-					? "animate-fade-up animate-duration-150 animate-ease-out"
+					? prevPageName === "folders" || prevPageName === "settings"
+						? "animate-fade-right animate-duration-150 animate-ease-out"
+						: "animate-fade-up animate-duration-150 animate-ease-out"
+					: selectedPageName === "folders" || selectedPageName === "settings"
+					? "animate-fade-out-left animate-duration-150 animate-ease-out"
 					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
 			}`}>
 			<div className="mx-6 mt-6">

@@ -38,7 +38,7 @@ export default function AddToFolder({
 	}, []);
 	return (
 		<div
-			className={`bg-white fixed rounded-3xl w-screen max-w-4xl -bottom-[70%] z-20 h-[70%] p-10 drop-shadow overflow-y-auto pb-28 grid gap-6 grid-cols-1 md:grid-cols-4 sm:grid-cols-2 no-scrollbar content-start transition-all ${
+			className={`bg-white fixed rounded-3xl w-screen duration-500 max-w-4xl -bottom-[70%] z-20 h-[70%] p-10 drop-shadow overflow-y-auto pb-28 grid gap-6 grid-cols-1 md:grid-cols-4 sm:grid-cols-2 no-scrollbar content-start transition-all ${
 				showFolders && "-translate-y-[100%]"
 			}`}>
 			{folders.map((folder) => (

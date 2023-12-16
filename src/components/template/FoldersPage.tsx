@@ -7,7 +7,7 @@ import { Context } from "@/app/provider";
 
 export default function FoldersPage() {
 	const [folders, setFolders] = useState<{ id: string; updatedAt: string | Date; name: string; notesId: [] }[]>([]);
-	const { isMounted, setIsMounted } = useContext(Context);
+	const { isMounted, setIsMounted, prevPageName, selectedPageName } = useContext(Context);
 
 	useEffect(() => {
 		const data = loadStorage();
@@ -18,7 +18,15 @@ export default function FoldersPage() {
 		<div
 			className={`grid gap-6 grid-cols-1 m-6 md:grid-cols-4 sm:grid-cols-2 ${
 				isMounted
-					? "animate-fade-up animate-duration-150 animate-ease-out"
+					? prevPageName === "notes"
+						? "animate-fade-left animate-duration-150 animate-ease-out"
+						: prevPageName === "settings"
+						? "animate-fade-right animate-duration-150 animate-ease-out"
+						: "animate-fade-up animate-duration-150 animate-ease-out"
+					: selectedPageName === "notes"
+					? "animate-fade-out-right animate-duration-150 animate-ease-out"
+					: selectedPageName === "settings"
+					? "animate-fade-out-left animate-duration-150 animate-ease-out"
 					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
 			}`}>
 			{folders.map((folder) => (

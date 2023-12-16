@@ -16,7 +16,7 @@ type NoteType = {
 type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function FolderDetailsPage() {
-	const { pageId, setPageName, isMounted, setIsMounted } = useContext(Context);
+	const { pageId, isMounted, setIsMounted, changePage } = useContext(Context);
 	const [notes, setNotes] = useState<NoteType[]>([]);
 	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
 	useEffect(() => {
@@ -38,7 +38,7 @@ export default function FolderDetailsPage() {
 				className="m-6 font-medium flex justify-between bg-white rounded-lg py-3 px-5 cursor-pointer"
 				onClick={() => {
 					setIsMounted(false);
-					setTimeout(() => setPageName!("editFolder"), 150);
+					changePage("editFolder");
 				}}>
 				<span>Folder Name</span>
 				<span className="text-[#8A8A8E]">{folder.name}</span>

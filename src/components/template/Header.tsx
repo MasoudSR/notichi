@@ -19,7 +19,8 @@ export default function Header() {
 					<button
 						className="absolute left-3"
 						onClick={() => {
-							pageName === "folder" ? setPageName("folders") : setPageName(prevPageName);
+							pageName === "folder" ? setPageName("folders") : 
+							pageName === prevPageName ? setPageName("notes") : setPageName(prevPageName);
 						}}>
 						<BiArrowBack size={27} />
 					</button>

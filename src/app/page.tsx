@@ -14,7 +14,7 @@ import EditFolderPage from "@/components/template/EditFolderPage";
 export default function Home() {
 	const { pageName } = useContext(Context);
 	return (
-		<div>
+		<div className="overflow-x-clip">
 			{pageName === "notes" && <AllNotesPage />}
 			{pageName === "folders" && <FoldersPage />}
 			{pageName === "settings" && <SettingsPage />}

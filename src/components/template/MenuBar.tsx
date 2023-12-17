@@ -5,7 +5,7 @@ import { Context } from "@/app/provider";
 import { useContext } from "react";
 
 export default function MenuBar() {
-	const { pageName , setIsMounted , changePage } = useContext(Context);
+	const { pageName , changePage } = useContext(Context);
 
 	return (
 		<div className="bg-white lg:rounded-t-3xl fixed bottom-0 w-screen max-w-4xl flex justify-around drop-shadow font-medium backdrop-blur-sm z-20">
@@ -14,8 +14,7 @@ export default function MenuBar() {
 					pageName === "notes" && "text-[#0265dc]"
 				}`}
 				onClick={() => {
-					pageName !== "notes" && setIsMounted(false);
-					changePage("notes")
+					pageName !== "notes" && changePage("notes")
 				}}>
 				<LuStickyNote />
 				All
@@ -25,8 +24,7 @@ export default function MenuBar() {
 					pageName === "folders" && "text-[#0265dc]"
 				}`}
 				onClick={() => {
-					pageName !== "folders" && setIsMounted(false);
-					changePage("folders")
+					pageName !== "folders" && changePage("folders")
 				}}>
 				<LuFolderClosed />
 				Folders
@@ -36,8 +34,7 @@ export default function MenuBar() {
 					pageName === "settings" && "text-[#0265dc]"
 				}`}
 				onClick={() => {
-					pageName !== "settings" && setIsMounted(false);
-					changePage("settings")
+					pageName !== "settings" && changePage("settings")
 				}}>
 				<LuSettings />
 				settings

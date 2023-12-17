@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
 
 export default function NewFolderPage() {
-	const { pageName, setPageName, isMounted, setIsMounted } = useContext(Context);
+	const { setPageName, isMounted, setIsMounted } = useContext(Context);
 	const [folder, setFolder] = useState<{ id: string; updatedAt: Date | string; name: string; notesId: [] }>({
 		id: "",
 		updatedAt: "",

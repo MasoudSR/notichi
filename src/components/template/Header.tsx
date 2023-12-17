@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { Context } from "@/app/provider";
 
 export default function Header() {
-	const { pageName, setPageName, setIsMounted , changePage , prevPageName , setPrevPageName } = useContext(Context);
+	const { pageName, setPageName, changePage, prevPageName } = useContext(Context);
 	const pathCheck = () => {
 		const paths = ["notes", "folders", "settings"];
 		return paths.includes(pageName);
@@ -19,7 +19,7 @@ export default function Header() {
 					<button
 						className="absolute left-3"
 						onClick={() => {
-					pageName === "folder" ? setPageName("folders") : setPageName(prevPageName);
+							pageName === "folder" ? setPageName("folders") : setPageName(prevPageName);
 						}}>
 						<BiArrowBack size={27} />
 					</button>
@@ -30,8 +30,7 @@ export default function Header() {
 				{pageName === "folders" && (
 					<button
 						onClick={() => {
-							setIsMounted(false);
-							changePage("addFolder")
+							changePage("addFolder");
 						}}
 						className="mr-3">
 						<LuFolderPlus size={27} />
@@ -39,8 +38,7 @@ export default function Header() {
 				)}
 				<button
 					onClick={() => {
-						pageName !== "addNote" && setIsMounted(false);
-						changePage("addNote")
+						pageName !== "addNote" && changePage("addNote");
 					}}
 					className="mr-3">
 					<CgFileAdd size={27} />

@@ -35,6 +35,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const [isMounted, setIsMounted] = useState(false);
 
 	function changePage(newPage: string) {
+		setIsMounted(false)
 		setSelectedPageName(newPage);
 		setTimeout(() => {
 			setPrevPageName(pageName);

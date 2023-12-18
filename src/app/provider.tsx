@@ -6,7 +6,7 @@ import React, { createContext, useState } from "react";
 export const Context = createContext<{
 	pageName: { name: string; id: string };
 	prevPageName: { name: string; id: string };
-	changePage: (newPage: string, id: string) => void;
+	changePage: (newPage: string, id?: string) => void;
 	isMounted: boolean;
 	setIsMounted: React.Dispatch<React.SetStateAction<boolean>>;
 	selectedPageName: string;

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
 
 export default function NewFolderPage() {
-	const { setPageName, isMounted, setIsMounted } = useContext(Context);
+	const { changePage, isMounted, setIsMounted } = useContext(Context);
 	const [folder, setFolder] = useState<{ id: string; updatedAt: Date | string; name: string; notesId: [] }>({
 		id: "",
 		updatedAt: "",
@@ -23,7 +23,7 @@ export default function NewFolderPage() {
 
 	const saveHandler = () => {
 		if (folder.name === "") {
-			setPageName("folders");
+			changePage("folders");
 		} else {
 			const data = loadStorage();
 			const newDate = new Date();
@@ -31,7 +31,7 @@ export default function NewFolderPage() {
 			data.folders.push(folder);
 			saveStorage(data);
 			toast.success("Folder Created");
-			setPageName("folders");
+			changePage("folders");
 		}
 	};
 

@@ -41,7 +41,7 @@ export default function AllNotesPage() {
 		<main
 			className={`flex flex-col ${
 				isMounted
-					? prevPageName === "folders" || prevPageName === "settings"
+					? prevPageName.name === "folders" || prevPageName.name === "settings"
 						? "animate-fade-right animate-duration-150 animate-ease-out"
 						: "animate-fade-up animate-duration-150 animate-ease-out"
 					: selectedPageName === "folders" || selectedPageName === "settings"

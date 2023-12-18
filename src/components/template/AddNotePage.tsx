@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
 
 export default function AddNotePage() {
-	const { pageName, setPageName } = useContext(Context);
+	const { changePage } = useContext(Context);
 
 	const [note, setNote] = useState<{
 		id: string;
@@ -35,7 +35,8 @@ export default function AddNotePage() {
 
 	const saveHandler = () => {
 		if (note.title === "" && note.text === "") {
-			setPageName("notes");
+			// setPageName("notes");
+			changePage("notes");
 		} else {
 			const data = loadStorage();
 			addToFolder(data, note.id, note.folderId);
@@ -44,7 +45,7 @@ export default function AddNotePage() {
 			data.notes.push(note);
 			saveStorage(data);
 			toast.success("Note Added Successfully");
-			setPageName("notes");
+			changePage("notes");
 		}
 	};
 	return <NoteFields note={note} setNote={setNote} saveHandler={saveHandler} deleteHandler={null} />;

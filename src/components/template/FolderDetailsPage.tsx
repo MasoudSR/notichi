@@ -16,13 +16,13 @@ type NoteType = {
 type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function FolderDetailsPage() {
-	const { pageId, isMounted, setIsMounted, changePage } = useContext(Context);
+	const { pageName, isMounted, setIsMounted, changePage } = useContext(Context);
 	const [notes, setNotes] = useState<NoteType[]>([]);
 	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
 	useEffect(() => {
 		const data = loadStorage();
-		const folderNotes = data.notes.filter((note: NoteType) => note.folderId === pageId);
-		const oldFolder = data.folders.find((item: FolderType) => item.id === pageId);
+		const folderNotes = data.notes.filter((note: NoteType) => note.folderId === pageName.id);
+		const oldFolder = data.folders.find((item: FolderType) => item.id === pageName.id);
 		setFolder(oldFolder);
 		setNotes(folderNotes);
 		setIsMounted(true);

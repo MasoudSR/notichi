@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
 
 export default function NoteDetailsPage() {
-	const { setPageName, pageId } = useContext(Context);
+	const { setPageName, pageName ,changePage } = useContext(Context);
 
 	const [note, setNote] = useState<{
 		id: string;
@@ -40,7 +40,7 @@ export default function NoteDetailsPage() {
 		data.notes.splice(index, 1, note);
 		saveStorage(data);
 		toast.success("Note Edited Successfully");
-		setPageName("notes");
+		changePage("notes")
 	};
 
 	const deleteHandler = () => {
@@ -57,12 +57,12 @@ export default function NoteDetailsPage() {
 
 		saveStorage(data);
 		toast.success("Note Removed Successfully");
-		setPageName("notes");
+		changePage("notes")
 	};
 
 	useEffect(() => {
 		const data = loadStorage();
-		const oldNote = data.notes.find((note: { id: string; title: string; text: string }) => note.id === pageId);
+		const oldNote = data.notes.find((note: { id: string; title: string; text: string }) => note.id === pageName.id);
 		setNote(oldNote);
 	}, []);
 	return (

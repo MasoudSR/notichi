@@ -16,12 +16,12 @@ type NoteType = {
 type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function EditFolderPage() {
-	const { pageId, setPageName, isMounted, setIsMounted } = useContext(Context);
+	const { pageName, isMounted, setIsMounted, changePage } = useContext(Context);
 	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
 
 	useEffect(() => {
 		const data = loadStorage();
-		const oldFolder = data.folders.find((item: FolderType) => item.id === pageId);
+		const oldFolder = data.folders.find((item: FolderType) => item.id === pageName.id);
 		setFolder(oldFolder);
 		setIsMounted(true);
 	}, []);
@@ -44,7 +44,7 @@ export default function EditFolderPage() {
 
 			saveStorage(data);
 			toast.success("Folder Edited Successfully");
-			setPageName("folder");
+			changePage("folder");
 		}
 	};
 
@@ -65,7 +65,7 @@ export default function EditFolderPage() {
 		data.removedItems.push(folder.id);
 		saveStorage(data);
 		toast.success("Folder Removed Successfully");
-		setPageName("folders");
+		changePage("folders");
 	};
 	return (
 		<div

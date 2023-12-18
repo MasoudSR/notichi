@@ -18,9 +18,9 @@ export default function FoldersPage() {
 		<div
 			className={`grid gap-6 grid-cols-1 m-6 md:grid-cols-4 sm:grid-cols-2 ${
 				isMounted
-					? prevPageName === "notes"
+					? prevPageName.name === "notes"
 						? "animate-fade-left animate-duration-150 animate-ease-out"
-						: prevPageName === "settings"
+						: prevPageName.name === "settings"
 						? "animate-fade-right animate-duration-150 animate-ease-out"
 						: "animate-fade-up animate-duration-150 animate-ease-out"
 					: selectedPageName === "notes"

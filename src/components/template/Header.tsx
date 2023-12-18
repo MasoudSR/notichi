@@ -6,10 +6,10 @@ import { useContext } from "react";
 import { Context } from "@/app/provider";
 
 export default function Header() {
-	const { pageName, setPageName, changePage, prevPageName } = useContext(Context);
+	const { pageName, changePage } = useContext(Context);
 	const pathCheck = () => {
 		const paths = ["notes", "folders", "settings"];
-		return paths.includes(pageName);
+		return paths.includes(pageName.name);
 	};
 
 	return (
@@ -19,8 +19,7 @@ export default function Header() {
 					<button
 						className="absolute left-3"
 						onClick={() => {
-							pageName === "folder" ? setPageName("folders") : 
-							pageName === prevPageName ? setPageName("notes") : setPageName(prevPageName);
+							changePage("back");
 						}}>
 						<BiArrowBack size={27} />
 					</button>
@@ -28,7 +27,7 @@ export default function Header() {
 				<span className="text-3xl">Notichi</span>
 			</div>
 			<span className="flex">
-				{pageName === "folders" && (
+				{pageName.name === "folders" && (
 					<button
 						onClick={() => {
 							changePage("addFolder");
@@ -39,7 +38,7 @@ export default function Header() {
 				)}
 				<button
 					onClick={() => {
-						pageName !== "addNote" && changePage("addNote");
+						pageName.name !== "addNote" && changePage("addNote");
 					}}
 					className="mr-3">
 					<CgFileAdd size={27} />

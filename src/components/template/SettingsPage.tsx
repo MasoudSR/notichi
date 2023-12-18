@@ -49,7 +49,7 @@ export default function SettingsPage() {
 		<div
 			className={`${
 				isMounted
-					? prevPageName === "folders" || prevPageName === "notes"
+					? prevPageName.name === "folders" || prevPageName.name === "notes"
 						? "animate-fade-left animate-duration-150 animate-ease-out"
 						: "animate-fade-up animate-duration-150 animate-ease-out"
 					: selectedPageName === "folders" || selectedPageName === "notes"

@@ -15,14 +15,14 @@ export default function Home() {
 	const { pageName } = useContext(Context);
 	return (
 		<div className="overflow-x-clip">
-			{pageName === "notes" && <AllNotesPage />}
-			{pageName === "folders" && <FoldersPage />}
-			{pageName === "settings" && <SettingsPage />}
-			{pageName === "addNote" && <AddNotePage />}
-			{pageName === "addFolder" && <NewFolderPage />}
-			{pageName === "note" && <NoteDetailsPage />}
-			{pageName === "folder" && <FolderDetailsPage />}
-			{pageName === "editFolder" && <EditFolderPage />}
+			{pageName.name === "notes" && <AllNotesPage />}
+			{pageName.name === "folders" && <FoldersPage />}
+			{pageName.name === "settings" && <SettingsPage />}
+			{pageName.name === "addNote" && <AddNotePage />}
+			{pageName.name === "addFolder" && <NewFolderPage />}
+			{pageName.name === "note" && <NoteDetailsPage />}
+			{pageName.name === "folder" && <FolderDetailsPage />}
+			{pageName.name === "editFolder" && <EditFolderPage />}
 		</div>
 	);
 }

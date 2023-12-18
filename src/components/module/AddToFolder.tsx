@@ -24,7 +24,7 @@ export default function AddToFolder({
 	setNote: React.Dispatch<React.SetStateAction<NoteType>>;
 	setShowFolders: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-	const { setPageName } = useContext(Context);
+	const { changePage } = useContext(Context);
 	const [folders, setFolders] = useState<FolderType[]>([]);
 
 	const addToFolderHandler = (folder: FolderType) => {
@@ -53,7 +53,7 @@ export default function AddToFolder({
 			{folders.length === 0 && (
 				<div
 					onClick={() => {
-						setPageName("addFolder");
+						changePage("addFolder");
 					}}
 					className="mr-3 flex justify-center items-end cursor-pointer">
 					<LuFolderPlus size={27} />

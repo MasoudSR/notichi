@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
 
 export default function NoteDetailsPage() {
-	const { setPageName, pageName ,changePage } = useContext(Context);
+	const { pageName ,changePage } = useContext(Context);
 
 	const [note, setNote] = useState<{
 		id: string;

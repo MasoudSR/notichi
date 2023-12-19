@@ -74,7 +74,7 @@ export default function NoteFields({
 				</div>
 			</div>
 			<AddToFolder note={note} setNote={setNote} showFolders={showFolders} setShowFolders={setShowFolders} />
-			{showFolders && <Shadow setShowFolders={setShowFolders} />}
+			{showFolders && <Shadow setShow={setShowFolders} />}
 		</>
 	);
 }

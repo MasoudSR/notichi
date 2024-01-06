@@ -1,7 +1,8 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import { loadSettings } from './../helpers/settingsManager';
 
 export const Context = createContext<{
 	pageName: { name: string; id: string };
@@ -25,8 +26,9 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const [pageHistory, setPageHistory] = useState<{ name: string; id: string }[] | []>([]);
 	const [selectedPageName, setSelectedPageName] = useState<string>("");
 	const [isMounted, setIsMounted] = useState(false);
-
+	
 	function changePage(newPage: string, id: string | undefined) {
+		const animations = loadSettings().animations
 		if (newPage !== "back") {
 			setIsMounted(false);
 			setSelectedPageName(newPage);
@@ -40,7 +42,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 			setTimeout(() => {
 				setPrevPageName(pageName);
 				id ? setPageName({ name: newPage, id: id }) : setPageName({ ...pageName, name: newPage });
-			}, 150);
+			}, animations ? 1150 : 0);
 		} else if (newPage === "back") {
 			const history: { name: string; id: string }[] = pageHistory;
 			const prevPage: { name: string; id: string } = history.pop()!;

@@ -4,6 +4,7 @@ import saveStorage from "@/helpers/saveStorage";
 import loadStorage from "@/helpers/loadStorage";
 import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
+import { loadSettings } from "@/helpers/settingsManager";
 
 type NoteType = {
 	id: string;
@@ -17,7 +18,8 @@ type FolderType = { id: string; updatedAt: string | Date; name: string; notesId:
 
 export default function EditFolderPage() {
 	const { pageName, isMounted, setIsMounted, changePage } = useContext(Context);
-	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
+	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] }); 
+	const [settings , setSettings] = useState(loadSettings)
 
 	useEffect(() => {
 		const data = loadStorage();
@@ -69,10 +71,10 @@ export default function EditFolderPage() {
 	};
 	return (
 		<div
-			className={`m-6 ${
+			className={`m-6 ${ settings.animations ? 
 				isMounted
 					? "animate-fade-up animate-duration-150 animate-ease-out"
-					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse" : ""
 			}`}>
 			<input
 				type="text"

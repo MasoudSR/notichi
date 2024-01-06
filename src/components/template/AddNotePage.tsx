@@ -35,7 +35,6 @@ export default function AddNotePage() {
 
 	const saveHandler = () => {
 		if (note.title === "" && note.text === "") {
-			// setPageName("notes");
 			changePage("notes");
 		} else {
 			const data = loadStorage();

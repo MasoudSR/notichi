@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import AddToFolder from "./AddToFolder";
 import Shadow from "./Shadow";
 import { Context } from "@/app/provider";
+import { loadSettings } from "@/helpers/settingsManager";
 
 type NoteType = {
 	id: string;
@@ -25,6 +26,8 @@ export default function NoteFields({
 }) {
 	const [showFolders, setShowFolders] = useState(false);
 	const { isMounted, setIsMounted } = useContext(Context);
+	const [settings , setSettings] = useState(loadSettings)
+
 
 	useEffect(() => {
 		setIsMounted(true);
@@ -33,10 +36,10 @@ export default function NoteFields({
 	return (
 		<>
 			<div
-				className={`m-6 font-medium ${
+				className={`m-6 font-medium ${ settings.animations ?
 					isMounted
 						? "animate-fade-up animate-duration-150 animate-ease-out"
-						: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+						: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse" : ""
 				}`}>
 				<input
 					type="text"

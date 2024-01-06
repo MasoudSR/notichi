@@ -3,6 +3,7 @@
 import { Context } from "@/app/provider";
 import Note from "@/components/module/Note";
 import loadStorage from "@/helpers/loadStorage";
+import { loadSettings } from "@/helpers/settingsManager";
 import React, { useContext, useEffect, useState } from "react";
 
 type DataType = {
@@ -23,12 +24,14 @@ export default function AllNotesPage() {
 	const [notes, setNotes] = useState<NoteType[]>([]);
 	const [data, setData] = useState<DataType>();
 	const { isMounted, setIsMounted, prevPageName, selectedPageName } = useContext(Context);
+	const [settings , setSettings] = useState({animations:true})
 
 	useEffect(() => {
 		const storageData = loadStorage();
 		setData(storageData);
 		setNotes(storageData.notes);
 		setIsMounted(true);
+		setSettings(loadSettings)
 	}, []);
 
 	const searchHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -37,17 +40,17 @@ export default function AllNotesPage() {
 		setNotes(filteredNotes);
 	};
 
+	const animations = settings.animations ? isMounted
+				? prevPageName.name === "folders" || prevPageName.name === "settings"
+					? "animate-fade-right animate-duration-150 animate-ease-out"
+					: "animate-fade-up animate-duration-150 animate-ease-out"
+				: selectedPageName === "folders" || selectedPageName === "settings"
+				? "animate-fade-out-left animate-duration-150 animate-ease-out"
+				: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse" : ""
+			
 	return (
 		<main
-			className={`flex flex-col ${
-				isMounted
-					? prevPageName.name === "folders" || prevPageName.name === "settings"
-						? "animate-fade-right animate-duration-150 animate-ease-out"
-						: "animate-fade-up animate-duration-150 animate-ease-out"
-					: selectedPageName === "folders" || selectedPageName === "settings"
-					? "animate-fade-out-left animate-duration-150 animate-ease-out"
-					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
-			}`}>
+			className={`flex flex-col ${animations}`}>
 			<div className="mx-6 mt-6">
 				<input
 					type="text"

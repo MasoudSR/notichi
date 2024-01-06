@@ -4,6 +4,7 @@ import loadStorage from "@/helpers/loadStorage";
 import { useContext, useEffect, useState } from "react";
 import Note from "../module/Note";
 import { Context } from "@/app/provider";
+import { loadSettings } from "@/helpers/settingsManager";
 
 type NoteType = {
 	id: string;
@@ -19,6 +20,8 @@ export default function FolderDetailsPage() {
 	const { pageName, isMounted, setIsMounted, changePage } = useContext(Context);
 	const [notes, setNotes] = useState<NoteType[]>([]);
 	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
+	const [settings , setSettings] = useState(loadSettings)
+
 	useEffect(() => {
 		const data = loadStorage();
 		const folderNotes = data.notes.filter((note: NoteType) => note.folderId === pageName.id);
@@ -27,12 +30,13 @@ export default function FolderDetailsPage() {
 		setNotes(folderNotes);
 		setIsMounted(true);
 	}, []);
+
 	return (
 		<div
-			className={`${
+			className={`${ settings.animations ?
 				isMounted
 					? "animate-fade-up animate-duration-150 animate-ease-out"
-					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse" : ""
 			}`}>
 			<div
 				className="m-6 font-medium flex justify-between bg-white rounded-lg py-3 px-5 cursor-pointer"

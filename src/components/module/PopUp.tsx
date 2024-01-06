@@ -1,3 +1,6 @@
+import { loadSettings } from "@/helpers/settingsManager";
+import { useState } from "react";
+
 export default function PopUp({
 	blueBtnText,
 	whiteBtnText,
@@ -11,9 +14,11 @@ export default function PopUp({
 	blueBtnFunc: () => void;
 	whiteBtnFunc: () => void;
 }) {
+
+	const [settings] = useState(loadSettings)
 	return (
 		<div className="fixed max-w-md top-[40%] left-[50%] z-20 drop-shadow -translate-x-[50%] w-[80%]">
-			<div className={`bg-white animate-jump-in animate-duration-300 p-8 rounded-3xl`}>
+			<div className={`bg-white p-8 rounded-3xl ${settings.animations && "animate-jump-in animate-duration-300"}`}>
 				{text}
 				<div className="justify-between mt-4 grid grid-cols-2 gap-6">
 					<button

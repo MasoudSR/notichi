@@ -5,6 +5,7 @@ import saveStorage from "@/helpers/saveStorage";
 import loadStorage from "@/helpers/loadStorage";
 import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
+import { loadSettings } from "@/helpers/settingsManager";
 
 export default function NewFolderPage() {
 	const { changePage, isMounted, setIsMounted } = useContext(Context);
@@ -14,6 +15,7 @@ export default function NewFolderPage() {
 		name: "",
 		notesId: [],
 	});
+	const [settings , setSettings] = useState(loadSettings)
 
 	useEffect(() => {
 		const id: string = nanoid();
@@ -37,10 +39,10 @@ export default function NewFolderPage() {
 
 	return (
 		<div
-			className={`m-6 ${
+			className={`m-6 ${ settings.animations ?
 				isMounted
 					? "animate-fade-up animate-duration-150 animate-ease-out"
-					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse" : ""
 			}`}>
 			<input
 				type="text"

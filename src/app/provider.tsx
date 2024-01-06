@@ -42,7 +42,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 			setTimeout(() => {
 				setPrevPageName(pageName);
 				id ? setPageName({ name: newPage, id: id }) : setPageName({ ...pageName, name: newPage });
-			}, animations ? 1150 : 0);
+			}, animations ? 150 : 0);
 		} else if (newPage === "back") {
 			const history: { name: string; id: string }[] = pageHistory;
 			const prevPage: { name: string; id: string } = history.pop()!;

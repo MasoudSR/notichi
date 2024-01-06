@@ -163,7 +163,7 @@ export default function SettingsPage() {
 					</button>
 				</div>
 				<div className="text-center text-[#8A8A8E]">
-					<p>Notichi v1.2.2</p>
+					<p>Notichi v1.2.3</p>
 					<p>Made by Masoud S.Rad</p>
 				</div>
 			</div>

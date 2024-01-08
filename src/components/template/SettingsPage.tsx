@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import PopUp from "../module/PopUp";
 import Shadow from "../module/Shadow";
 import { loadSettings, saveSettings } from "@/helpers/settingsManager";
+import syncHandler from "@/helpers/syncHandler";
 
 export default function SettingsPage() {
 	const animationsBtnHandler = (checkbox: any) => {
@@ -42,27 +43,6 @@ export default function SettingsPage() {
 	useEffect(() => {
 		setIsMounted(true);
 	}, []);
-
-	const syncHandler = async () => {
-		const data = loadStorage();
-		try {
-			const res = await toast.promise(
-				fetch("/api/cloud", {
-					method: "POST",
-					headers: { "Content-Type": "application-json" },
-					body: JSON.stringify(data),
-				}),
-				{
-					pending: "Sync in Progress",
-				}
-			);
-			const syncedData = await res.json();
-			saveStorage(syncedData);
-			toast.success("Data Synced Successfully");
-		} catch (error) {
-			toast.error("Error in Synchronizing Data");
-		}
-	};
 
 	const clearStorageHandler = () => {
 		localStorage.removeItem("data");
@@ -100,12 +80,11 @@ export default function SettingsPage() {
 									</div>
 								</div>
 								<div className=" flex justify-between py-3 px-5 items-center border-t">
-									<span>Auto Sync (Soon)</span>
+									<span>Auto Sync</span>
 									<label className="relative flex justify-between items-center p-2">
 										<input
 											type="checkbox"
-											disabled
-											// defaultChecked={settings.autoSync}
+											defaultChecked={settings.autoSync}
 											className="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none rounded-md"
 											onChange={autoSyncBtnHandler}
 										/>
@@ -115,7 +94,7 @@ export default function SettingsPage() {
 								<div className="w-full border-t grid grid-cols-3 p-4 gap-4">
 									<button
 										className="bg-[#017AFF] text-white text-lg p-3 rounded-lg shadow-md shadow-[#017AFF]/30 col-span-2"
-										onClick={syncHandler}>
+										onClick={()=>syncHandler("force")}>
 										Sync Now
 									</button>
 									<button

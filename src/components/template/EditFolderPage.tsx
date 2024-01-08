@@ -5,6 +5,7 @@ import loadStorage from "@/helpers/loadStorage";
 import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
 import { loadSettings } from "@/helpers/settingsManager";
+import syncHandler from "@/helpers/syncHandler";
 
 type NoteType = {
 	id: string;
@@ -47,6 +48,7 @@ export default function EditFolderPage() {
 			saveStorage(data);
 			toast.success("Folder Edited Successfully");
 			changePage("folder");
+			syncHandler("auto")
 		}
 	};
 
@@ -68,6 +70,7 @@ export default function EditFolderPage() {
 		saveStorage(data);
 		toast.success("Folder Removed Successfully");
 		changePage("folders");
+		syncHandler("auto")
 	};
 	return (
 		<div

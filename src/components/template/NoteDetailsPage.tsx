@@ -7,6 +7,7 @@ import saveStorage from "@/helpers/saveStorage";
 import { addToFolder, deleteFromFolder } from "@/helpers/folderManager";
 import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
+import syncHandler from "@/helpers/syncHandler";
 
 export default function NoteDetailsPage() {
 	const { pageName ,changePage } = useContext(Context);
@@ -41,6 +42,7 @@ export default function NoteDetailsPage() {
 		saveStorage(data);
 		toast.success("Note Edited Successfully");
 		changePage("notes")
+		syncHandler("auto")
 	};
 
 	const deleteHandler = () => {
@@ -58,6 +60,7 @@ export default function NoteDetailsPage() {
 		saveStorage(data);
 		toast.success("Note Removed Successfully");
 		changePage("notes")
+		syncHandler("auto")
 	};
 
 	useEffect(() => {

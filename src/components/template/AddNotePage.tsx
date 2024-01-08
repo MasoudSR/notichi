@@ -8,6 +8,7 @@ import saveStorage from "@/helpers/saveStorage";
 import { addToFolder } from "@/helpers/folderManager";
 import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
+import syncHandler from "@/helpers/syncHandler";
 
 export default function AddNotePage() {
 	const { changePage } = useContext(Context);
@@ -45,6 +46,7 @@ export default function AddNotePage() {
 			saveStorage(data);
 			toast.success("Note Added Successfully");
 			changePage("notes");
+			syncHandler("auto")
 		}
 	};
 	return <NoteFields note={note} setNote={setNote} saveHandler={saveHandler} deleteHandler={null} />;

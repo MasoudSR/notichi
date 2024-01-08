@@ -6,6 +6,7 @@ import loadStorage from "@/helpers/loadStorage";
 import { toast } from "react-toastify";
 import { Context } from "@/app/provider";
 import { loadSettings } from "@/helpers/settingsManager";
+import syncHandler from "@/helpers/syncHandler";
 
 export default function NewFolderPage() {
 	const { changePage, isMounted, setIsMounted } = useContext(Context);
@@ -34,6 +35,7 @@ export default function NewFolderPage() {
 			saveStorage(data);
 			toast.success("Folder Created");
 			changePage("folders");
+			syncHandler("auto")
 		}
 	};
 

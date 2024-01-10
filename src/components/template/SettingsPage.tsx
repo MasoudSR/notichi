@@ -1,12 +1,9 @@
 "use client";
 
 import { Context } from "@/app/provider";
-import loadStorage from "@/helpers/loadStorage";
-import saveStorage from "@/helpers/saveStorage";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import PopUp from "../module/PopUp";
 import Shadow from "../module/Shadow";
 import { loadSettings, saveSettings } from "@/helpers/settingsManager";

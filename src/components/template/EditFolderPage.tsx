@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import saveStorage from "@/helpers/saveStorage";
 import loadStorage from "@/helpers/loadStorage";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { Context } from "@/app/provider";
 import { loadSettings } from "@/helpers/settingsManager";
 import syncHandler from "@/helpers/syncHandler";

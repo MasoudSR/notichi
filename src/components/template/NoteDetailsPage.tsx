@@ -5,7 +5,7 @@ import NoteFields from "../module/NoteFields";
 import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
 import { addToFolder, deleteFromFolder } from "@/helpers/folderManager";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { Context } from "@/app/provider";
 import syncHandler from "@/helpers/syncHandler";
 

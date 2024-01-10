@@ -14,7 +14,7 @@ import { useSession } from "next-auth/react";
 import { loadSettings } from "@/helpers/settingsManager";
 import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 export default function Home() {
 	const { status, data: session } = useSession();
@@ -29,20 +29,46 @@ export default function Home() {
 			} else if (status === "authenticated") {
 				setOutput("syncing");
 				const data = loadStorage();
-				try {
-					const res = await fetch("/api/cloud", {
+				// try {
+				// 	const res = await fetch("/api/cloud", {
+				// 		method: "POST",
+				// 		headers: { "Content-Type": "application-json" },
+				// 		body: JSON.stringify(data),
+				// 	});
+				// 	const syncedData = await res.json();
+				// 	saveStorage(syncedData);
+				// 	toast.success("Data Synced Successfully");
+				// 	setOutput("normal");
+				// } catch (error) {
+				// 	toast.error("Error in Synchronizing Data");
+				// 	setOutput("normal");
+				// }
+
+				await toast.promise(
+					fetch("/api/cloud", {
 						method: "POST",
 						headers: { "Content-Type": "application-json" },
 						body: JSON.stringify(data),
-					});
-					const syncedData = await res.json();
-					saveStorage(syncedData);
-					toast.success("Data Synced Successfully");
-					setOutput("normal");
-				} catch (error) {
-					toast.error("Error in Synchronizing Data");
-					setOutput("normal");
-				}
+					}),
+					{
+						loading: "Sync in Progress ...",
+						success: (res) => {
+							if (!res.ok) {
+								throw new Error(`${res.status}`);
+							}
+							const promise = res.json();
+							promise.then((result) => {
+								saveStorage(result);
+								setOutput("normal");
+							});
+							return "Data Synced Successfully";
+						},
+						error: (e) => {
+							setOutput("normal");
+							return `Sync Failed. ${e}`;
+						},
+					}
+				);
 			}
 		} else {
 			setOutput("normal");

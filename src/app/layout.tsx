@@ -3,7 +3,7 @@ import "./globals.css";
 import MenuBar from "@/components/template/MenuBar";
 import Header from "@/components/template/Header";
 import { Providers } from "./provider";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<Header />
 					{children}
 					<MenuBar />
-					<ToastContainer position="top-center" autoClose={1500} hideProgressBar />
+					<Toaster />
 				</Providers>
 			</body>
 		</html>

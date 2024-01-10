@@ -4,7 +4,6 @@ import MenuBar from "@/components/template/MenuBar";
 import Header from "@/components/template/Header";
 import { Providers } from "./provider";
 import { Toaster } from "react-hot-toast";
-import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
 	title: "Notichi",

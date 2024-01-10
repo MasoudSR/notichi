@@ -15,6 +15,7 @@ import { loadSettings } from "@/helpers/settingsManager";
 import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
 import { toast } from "react-hot-toast";
+import Loading from "./loading";
 
 export default function Home() {
 	const { status, data: session } = useSession();
@@ -27,22 +28,7 @@ export default function Home() {
 			if (status === "loading") {
 				setOutput("loading");
 			} else if (status === "authenticated") {
-				setOutput("syncing");
 				const data = loadStorage();
-				// try {
-				// 	const res = await fetch("/api/cloud", {
-				// 		method: "POST",
-				// 		headers: { "Content-Type": "application-json" },
-				// 		body: JSON.stringify(data),
-				// 	});
-				// 	const syncedData = await res.json();
-				// 	saveStorage(syncedData);
-				// 	toast.success("Data Synced Successfully");
-				// 	setOutput("normal");
-				// } catch (error) {
-				// 	toast.error("Error in Synchronizing Data");
-				// 	setOutput("normal");
-				// }
 
 				await toast.promise(
 					fetch("/api/cloud", {
@@ -51,7 +37,7 @@ export default function Home() {
 						body: JSON.stringify(data),
 					}),
 					{
-						loading: "Sync in Progress ...",
+						loading: "AutoSync in Progress ...",
 						success: (res) => {
 							if (!res.ok) {
 								throw new Error(`${res.status}`);
@@ -81,8 +67,7 @@ export default function Home() {
 
 	return (
 		<>
-			{output === "loading" && <div>loading</div>}
-			{output === "syncing" && <div>sync in progress</div>}
+			{output === "loading" && <Loading />}
 			{output === "normal" && (
 				<div className="overflow-x-clip">
 					{pageName.name === "notes" && <AllNotesPage />}

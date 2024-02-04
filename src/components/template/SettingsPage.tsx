@@ -8,6 +8,7 @@ import PopUp from "../module/PopUp";
 import Shadow from "../module/Shadow";
 import { loadSettings, saveSettings } from "@/helpers/settingsManager";
 import syncHandler from "@/helpers/syncHandler";
+import { PiUserCircleDuotone } from "react-icons/pi";
 
 export default function SettingsPage() {
 	const animationsBtnHandler = (checkbox: any) => {
@@ -36,9 +37,18 @@ export default function SettingsPage() {
 	const { isMounted, setIsMounted, prevPageName, selectedPageName } = useContext(Context);
 	const [clearStoragePopUp, setClearStoragePopUp] = useState(false);
 	const [settings, setSettings] = useState(loadSettings);
+	const [isOnline, setIsOnline] = useState(false);
+
+	const onlineChecker = () => {
+		navigator.onLine ? setIsOnline(true) : setIsOnline(false);
+	};
 
 	useEffect(() => {
 		setIsMounted(true);
+		onlineChecker();
+		setInterval(() => {
+			onlineChecker();
+		}, 3000);
 	}, []);
 
 	const clearStorageHandler = () => {
@@ -59,62 +69,76 @@ export default function SettingsPage() {
 	return (
 		<>
 			<div className={`p-6 flex flex-col gap-8 ${animations}`}>
-				{status === "loading" ? (
-					<div className="flex font-medium text-xl bg-white rounded-lg justify-center">
-						<span className="border-4 border-t-orange-300 animate-spin h-8 w-8 m-3 block rounded-full" />
-					</div>
-				) : (
-					<div className="font-medium text-xl bg-white rounded-lg flex flex-col justify-center">
-						{status === "authenticated" ? (
-							<div>
-								<div className="flex gap-4 m-4">
-									<Image src={session?.user?.image!} alt={session?.user?.name!} width={70} height={70} />
-									<div className="flex flex-col">
-										<span>{session?.user?.name}</span>
-										<span className="font-light whitespace-pre-line truncate text-[#8A8A8E]">
-											{session?.user?.email}
-										</span>
+				{isOnline ? (
+					status === "loading" ? (
+						<div className="flex font-medium text-xl bg-white rounded-lg justify-center">
+							<span className="border-4 border-t-orange-300 animate-spin h-8 w-8 m-3 block rounded-full" />
+						</div>
+					) : (
+						<div className="font-medium text-xl bg-white rounded-lg flex flex-col justify-center">
+							{status === "authenticated" ? (
+								<div>
+									<div className="flex gap-4 m-4 items-center">
+										<Image src={session?.user?.image!} alt={session?.user?.name!} width={70} height={70} />
+										<div className="flex flex-col">
+											<span>{session?.user?.name}</span>
+											<span className="font-light text-base whitespace-pre-line truncate text-[#8A8A8E]">
+												{session?.user?.email}
+											</span>
+										</div>
+									</div>
+									<div className=" flex justify-between py-3 px-5 items-center border-t">
+										<span>Auto Sync</span>
+										<label className="relative flex justify-between items-center p-2">
+											<input
+												type="checkbox"
+												defaultChecked={settings.autoSync}
+												className="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none rounded-md"
+												onChange={autoSyncBtnHandler}
+											/>
+											<span className="w-16 h-8 flex items-center flex-shrink-0 ml-4 p-1 bg-gray-300 rounded-full duration-300 ease-in-out peer-checked:bg-green-400 after:w-6 after:h-6 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-8"></span>
+										</label>
+									</div>
+									<div className="w-full border-t grid grid-cols-3 p-4 gap-4">
+										<button
+											className="bg-[#017AFF] text-white text-lg p-3 rounded-lg shadow-md shadow-[#017AFF]/30 col-span-2"
+											onClick={() => syncHandler("force")}>
+											Sync Now
+										</button>
+										<button
+											className="text-center bg-red-500 text-white sm:p-1 rounded-lg shadow-md shadow-red-500/30 text-lg"
+											onClick={() => signOut()}>
+											Sign Out
+										</button>
 									</div>
 								</div>
-								<div className=" flex justify-between py-3 px-5 items-center border-t">
-									<span>Auto Sync</span>
-									<label className="relative flex justify-between items-center p-2">
-										<input
-											type="checkbox"
-											defaultChecked={settings.autoSync}
-											className="absolute left-1/2 -translate-x-1/2 w-full h-full peer appearance-none rounded-md"
-											onChange={autoSyncBtnHandler}
-										/>
-										<span className="w-16 h-8 flex items-center flex-shrink-0 ml-4 p-1 bg-gray-300 rounded-full duration-300 ease-in-out peer-checked:bg-green-400 after:w-6 after:h-6 after:bg-white after:rounded-full after:shadow-md after:duration-300 peer-checked:after:translate-x-8"></span>
-									</label>
-								</div>
-								<div className="w-full border-t grid grid-cols-3 p-4 gap-4">
-									<button
-										className="bg-[#017AFF] text-white text-lg p-3 rounded-lg shadow-md shadow-[#017AFF]/30 col-span-2"
-										onClick={()=>syncHandler("force")}>
-										Sync Now
+							) : (
+								<div>
+									<button className="w-full py-3 px-5 flex justify-center gap-2" onClick={() => signIn("google")}>
+										<Image src="/icons/Google-logo.svg" alt="GitHub" width={30} height={30} />
+										Sign in with Google
 									</button>
 									<button
-										className="text-center bg-red-500 text-white sm:p-1 rounded-lg shadow-md shadow-red-500/30 text-lg"
-										onClick={() => signOut()}>
-										Sign Out
+										className="w-full py-3 px-5 flex justify-center gap-2 border-t"
+										onClick={() => signIn("github")}>
+										<Image src="/icons/github-mark.svg" alt="GitHub" width={30} height={30} />
+										Sign in with GitHub
 									</button>
 								</div>
+							)}
+						</div>
+					)
+				) : (
+					<div className="font-medium text-xl bg-white rounded-lg flex flex-col justify-center">
+						<div className="flex gap-4 m-4 items-center">
+							<PiUserCircleDuotone size={55} />
+							<div className="flex flex-col">
+								<span>Offline</span>
+								<span className="font-light text-base whitespace-pre-line truncate text-[#8A8A8E]">
+									You are offline, get back online to sign in.
+								</span>
 							</div>
-						) : (
-							<div>
-								<button className="w-full py-3 px-5 flex justify-center gap-2" onClick={() => signIn("google")}>
-									<Image src="/icons/Google-logo.svg" alt="GitHub" width={30} height={30} />
-									Sign in with Google
-								</button>
-								<button
-									className="w-full py-3 px-5 flex justify-center gap-2 border-t"
-									onClick={() => signIn("github")}>
-									<Image src="/icons/github-mark.svg" alt="GitHub" width={30} height={30} />
-									Sign in with GitHub
-								</button>
-							</div>
-						)}
+						</div>
 					</div>
 				)}
 				<div className="font-medium text-xl flex flex-col bg-white rounded-lg">
@@ -139,7 +163,7 @@ export default function SettingsPage() {
 					</button>
 				</div>
 				<div className="text-center text-[#8A8A8E]">
-					<p>Notichi v1.3.1</p>
+					<p>Notichi v1.3.2</p>
 					<p>Made by Masoud S.Rad</p>
 				</div>
 			</div>

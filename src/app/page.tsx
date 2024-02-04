@@ -62,7 +62,7 @@ export default function Home() {
 	};
 
 	useEffect(() => {
-		syncHandler();
+		navigator.onLine && syncHandler()
 	}, [status]);
 
 	return (

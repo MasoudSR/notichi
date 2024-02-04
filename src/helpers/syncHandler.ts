@@ -28,12 +28,14 @@ async function sync() {
 }
 
 export default function syncHandler(type: string) {
-	if (type === "force") {
-		sync();
-	} else if (type === "auto") {
-		const settings = loadSettings();
-		if (settings.autoSync) {
+	if (navigator.onLine) {
+		if (type === "force") {
 			sync();
+		} else if (type === "auto") {
+			const settings = loadSettings();
+			if (settings.autoSync) {
+				sync();
+			}
 		}
 	}
 }

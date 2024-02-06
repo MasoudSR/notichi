@@ -1,7 +1,7 @@
 "use client";
 
 import AllNotesPage from "@/components/template/AllNotesPage";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "./provider";
 import FoldersPage from "@/components/template/FoldersPage";
 import SettingsPage from "@/components/template/SettingsPage";
@@ -15,19 +15,15 @@ import { loadSettings } from "@/helpers/settingsManager";
 import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
 import { toast } from "react-hot-toast";
-import Loading from "./loading";
 
 export default function Home() {
 	const { status, data: session } = useSession();
 	const { pageName } = useContext(Context);
-	const [output, setOutput] = useState("normal");
 
 	const syncHandler = async () => {
 		const settings = loadSettings();
 		if (settings.autoSync) {
-			if (status === "loading") {
-				setOutput("loading");
-			} else if (status === "authenticated") {
+			if (status === "authenticated") {
 				const data = loadStorage();
 
 				await toast.promise(
@@ -45,41 +41,34 @@ export default function Home() {
 							const promise = res.json();
 							promise.then((result) => {
 								saveStorage(result);
-								setOutput("normal");
 							});
 							return "Data Synced Successfully";
 						},
 						error: (e) => {
-							setOutput("normal");
 							return `Sync Failed. ${e}`;
 						},
 					}
 				);
 			}
-		} else {
-			setOutput("normal");
 		}
 	};
 
 	useEffect(() => {
-		navigator.onLine && syncHandler()
+		navigator.onLine && syncHandler();
 	}, [status]);
 
 	return (
 		<>
-			{output === "loading" && <Loading />}
-			{output === "normal" && (
-				<div className="overflow-x-clip">
-					{pageName.name === "notes" && <AllNotesPage />}
-					{pageName.name === "folders" && <FoldersPage />}
-					{pageName.name === "settings" && <SettingsPage />}
-					{pageName.name === "addNote" && <AddNotePage />}
-					{pageName.name === "addFolder" && <NewFolderPage />}
-					{pageName.name === "note" && <NoteDetailsPage />}
-					{pageName.name === "folder" && <FolderDetailsPage />}
-					{pageName.name === "editFolder" && <EditFolderPage />}
-				</div>
-			)}
+			<div className="overflow-x-clip">
+				{pageName.name === "notes" && <AllNotesPage />}
+				{pageName.name === "folders" && <FoldersPage />}
+				{pageName.name === "settings" && <SettingsPage />}
+				{pageName.name === "addNote" && <AddNotePage />}
+				{pageName.name === "addFolder" && <NewFolderPage />}
+				{pageName.name === "note" && <NoteDetailsPage />}
+				{pageName.name === "folder" && <FolderDetailsPage />}
+				{pageName.name === "editFolder" && <EditFolderPage />}
+			</div>
 		</>
 	);
 }

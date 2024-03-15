@@ -71,12 +71,12 @@ export default function AllNotesPage() {
 			) : search.length > 0 ? (
 				<p className="flex justify-center mt-7">There are no matching results for: {search}</p>
 			) : (
-				<p className="flex flex-col items-center justify-center mt-7">
+				<div className="flex flex-col items-center justify-center mt-7">
 					<div>You have no notes</div>
 					<div className="flex justify-center items-center gap-1">
 						Use <CgFileAdd /> button to add new note.
 					</div>
-				</p>
+				</div>
 			)}
 		</main>
 	);

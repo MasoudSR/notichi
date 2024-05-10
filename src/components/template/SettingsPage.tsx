@@ -40,7 +40,6 @@ export default function SettingsPage() {
 	const [isOnline, setIsOnline] = useState(false);
 	const [isSyncing, setIsSyncing] = useState(false);
 
-
 	const onlineChecker = () => {
 		navigator.onLine ? setIsOnline(true) : setIsOnline(false);
 	};
@@ -81,7 +80,16 @@ export default function SettingsPage() {
 							{status === "authenticated" ? (
 								<div>
 									<div className="flex gap-4 m-4 items-center">
-										<Image src={session?.user?.image!} alt={session?.user?.name!} width={70} height={70} />
+										<Image
+											src={session?.user?.image!}
+											alt={session?.user?.name!}
+											width={70}
+											height={70}
+											style={{
+												objectFit: "cover",
+												borderRadius: "50%",
+											}}
+										/>
 										<div className="flex flex-col">
 											<span>{session?.user?.name}</span>
 											<span className="font-light text-base whitespace-pre-line truncate text-[#8A8A8E]">
@@ -103,10 +111,12 @@ export default function SettingsPage() {
 									</div>
 									<div className="w-full border-t grid grid-cols-3 p-4 gap-4">
 										<button
-											className={`${isSyncing ? "bg-[#70b5ff]" : "bg-[#017AFF]" } text-white text-lg p-3 rounded-lg shadow-md shadow-[#017AFF]/30 col-span-2 `}
-											onClick={() => syncHandler("force" , setIsSyncing)}
+											className={`${
+												isSyncing ? "bg-[#70b5ff]" : "bg-[#017AFF]"
+											} text-white text-lg p-3 rounded-lg shadow-md shadow-[#017AFF]/30 col-span-2 `}
+											onClick={() => syncHandler("force", setIsSyncing)}
 											disabled={isSyncing}>
-												{isSyncing ? "Sync in Progress..." : "Sync Now"}
+											{isSyncing ? "Sync in Progress..." : "Sync Now"}
 										</button>
 										<button
 											className="text-center bg-red-500 text-white sm:p-1 rounded-lg shadow-md shadow-red-500/30 text-lg"
@@ -166,7 +176,7 @@ export default function SettingsPage() {
 					</button>
 				</div>
 				<div className="text-center text-[#8A8A8E]">
-					<p>Notichi v1.3.2</p>
+					<p>Notichi v1.3.3</p>
 					<p>Made by Masoud S.Rad</p>
 				</div>
 			</div>

@@ -69,7 +69,7 @@ export default function AllNotesPage() {
 					<Note key={note.id} id={note.id} title={note.title} text={note.text} />
 				))
 			) : search.length > 0 ? (
-				<p className="flex justify-center mt-7">There are no matching results for: {search}</p>
+				<p className="flex justify-center mt-7">There are no matching results</p>
 			) : (
 				<div className="flex flex-col items-center justify-center mt-7">
 					<div>You have no notes</div>

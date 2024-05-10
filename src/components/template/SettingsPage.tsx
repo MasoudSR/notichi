@@ -38,6 +38,8 @@ export default function SettingsPage() {
 	const [clearStoragePopUp, setClearStoragePopUp] = useState(false);
 	const [settings, setSettings] = useState(loadSettings);
 	const [isOnline, setIsOnline] = useState(false);
+	const [isSyncing, setIsSyncing] = useState(false);
+
 
 	const onlineChecker = () => {
 		navigator.onLine ? setIsOnline(true) : setIsOnline(false);
@@ -101,9 +103,10 @@ export default function SettingsPage() {
 									</div>
 									<div className="w-full border-t grid grid-cols-3 p-4 gap-4">
 										<button
-											className="bg-[#017AFF] text-white text-lg p-3 rounded-lg shadow-md shadow-[#017AFF]/30 col-span-2"
-											onClick={() => syncHandler("force")}>
-											Sync Now
+											className={`${isSyncing ? "bg-[#70b5ff]" : "bg-[#017AFF]" } text-white text-lg p-3 rounded-lg shadow-md shadow-[#017AFF]/30 col-span-2 `}
+											onClick={() => syncHandler("force" , setIsSyncing)}
+											disabled={isSyncing}>
+												{isSyncing ? "Sync in Progress..." : "Sync Now"}
 										</button>
 										<button
 											className="text-center bg-red-500 text-white sm:p-1 rounded-lg shadow-md shadow-red-500/30 text-lg"

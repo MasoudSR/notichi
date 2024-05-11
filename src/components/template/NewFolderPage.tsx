@@ -9,7 +9,7 @@ import { loadSettings } from "@/helpers/settingsManager";
 import syncHandler from "@/helpers/syncHandler";
 
 export default function NewFolderPage() {
-	const { changePage, isMounted, setIsMounted } = useContext(Context);
+	const { changePage, isMounted, setIsMounted , setIsSyncing } = useContext(Context);
 	const [folder, setFolder] = useState<{ id: string; updatedAt: Date | string; name: string; notesId: [] }>({
 		id: "",
 		updatedAt: "",
@@ -35,7 +35,7 @@ export default function NewFolderPage() {
 			saveStorage(data);
 			toast.success("Folder Created");
 			changePage("folders");
-			syncHandler("auto")
+			syncHandler("auto" , setIsSyncing)
 		}
 	};
 

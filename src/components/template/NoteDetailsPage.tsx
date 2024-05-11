@@ -10,7 +10,7 @@ import { Context } from "@/app/provider";
 import syncHandler from "@/helpers/syncHandler";
 
 export default function NoteDetailsPage() {
-	const { pageName ,changePage } = useContext(Context);
+	const { pageName ,changePage , setIsSyncing } = useContext(Context);
 
 	const [note, setNote] = useState<{
 		id: string;
@@ -42,7 +42,7 @@ export default function NoteDetailsPage() {
 		saveStorage(data);
 		toast.success("Note Edited Successfully");
 		changePage("notes")
-		syncHandler("auto")
+		syncHandler("auto" , setIsSyncing)
 	};
 
 	const deleteHandler = () => {
@@ -60,7 +60,7 @@ export default function NoteDetailsPage() {
 		saveStorage(data);
 		toast.success("Note Removed Successfully");
 		changePage("notes")
-		syncHandler("auto")
+		syncHandler("auto" , setIsSyncing)
 	};
 
 	useEffect(() => {

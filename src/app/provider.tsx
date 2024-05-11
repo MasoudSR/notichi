@@ -9,14 +9,18 @@ export const Context = createContext<{
 	prevPageName: { name: string; id: string };
 	changePage: (newPage: string, id?: string) => void;
 	isMounted: boolean;
+	isSyncing: boolean;
 	setIsMounted: React.Dispatch<React.SetStateAction<boolean>>;
+	setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>;
 	selectedPageName: string;
 }>({
 	pageName: { name: "notes", id: "" },
 	prevPageName: { name: "", id: "" },
 	changePage: () => {},
 	isMounted: false,
+	isSyncing: false,
 	setIsMounted: () => {},
+	setIsSyncing: () => {},
 	selectedPageName: "",
 });
 
@@ -26,6 +30,8 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const [pageHistory, setPageHistory] = useState<{ name: string; id: string }[] | []>([]);
 	const [selectedPageName, setSelectedPageName] = useState<string>("");
 	const [isMounted, setIsMounted] = useState(false);
+	const [isSyncing, setIsSyncing] = useState(false);
+
 	
 	function changePage(newPage: string, id: string | undefined) {
 		const animations = loadSettings().animations
@@ -61,6 +67,8 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 					selectedPageName,
 					isMounted,
 					pageName,
+					isSyncing,
+					setIsSyncing,
 				}}>
 				{children}
 			</Context.Provider>

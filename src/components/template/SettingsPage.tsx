@@ -34,11 +34,10 @@ export default function SettingsPage() {
 	};
 
 	const { status, data: session } = useSession();
-	const { isMounted, setIsMounted, prevPageName, selectedPageName } = useContext(Context);
+	const { isMounted, setIsMounted, prevPageName, selectedPageName , isSyncing , setIsSyncing } = useContext(Context);
 	const [clearStoragePopUp, setClearStoragePopUp] = useState(false);
 	const [settings, setSettings] = useState(loadSettings);
 	const [isOnline, setIsOnline] = useState(false);
-	const [isSyncing, setIsSyncing] = useState(false);
 
 	const onlineChecker = () => {
 		navigator.onLine ? setIsOnline(true) : setIsOnline(false);

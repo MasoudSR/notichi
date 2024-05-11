@@ -4,9 +4,11 @@ import { BiArrowBack } from "react-icons/bi";
 import { LuFolderPlus } from "react-icons/lu";
 import { useContext } from "react";
 import { Context } from "@/app/provider";
+import { TbCloud } from "react-icons/tb";
+import { IoSyncOutline } from "react-icons/io5";
 
 export default function Header() {
-	const { pageName, changePage } = useContext(Context);
+	const { pageName, changePage, isSyncing } = useContext(Context);
 	const pathCheck = () => {
 		const paths = ["notes", "folders", "settings"];
 		return paths.includes(pageName.name);
@@ -27,6 +29,12 @@ export default function Header() {
 				<span className="text-3xl">Notichi</span>
 			</div>
 			<span className="flex">
+				{isSyncing && 
+				<span className="relative mr-3">
+					<TbCloud size={15} className="absolute top-1.5 left-[6px]" />
+					<IoSyncOutline size={27} className="animate-spin" />
+				</span>
+				}
 				{pageName.name === "folders" && (
 					<button
 						onClick={() => {

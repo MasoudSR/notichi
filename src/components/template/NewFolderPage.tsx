@@ -32,10 +32,11 @@ export default function NewFolderPage() {
 			const newDate = new Date();
 			folder.updatedAt = newDate;
 			newData!.folders.push(folder);
-			saveStorage(newData!,setData);
+			setData(newData)
+			saveStorage(newData!);
 			toast.success("Folder Created");
 			changePage("folders");
-			syncHandler("auto" , setIsSyncing ,setData)
+			syncHandler("auto" , setIsSyncing,setData)
 		}
 	};
 

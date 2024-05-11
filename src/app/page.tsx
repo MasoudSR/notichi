@@ -58,7 +58,7 @@ export default function Home() {
 		const storageData = loadStorage();
 		setData(storageData)
 		// changePage("notes")
-		syncHandler("auto" , setIsSyncing , setData)
+		syncHandler("auto" , setIsSyncing, setData)
 	}, [])
 	
 

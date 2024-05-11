@@ -17,7 +17,7 @@ type DataType = {
 	removedItems: string[];
 };
 
-async function sync(
+function sync(
 	setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>,
 	setData: React.Dispatch<React.SetStateAction<DataType>>
 ) {
@@ -54,7 +54,8 @@ async function sync(
 	})
 		.then((res) => res.json())
 		.then((data) => {
-			saveStorage(data, setData);
+			setData(data)
+			saveStorage(data);
 			toast.success("Data Synced Successfully");
 			setIsSyncing(false);
 		})

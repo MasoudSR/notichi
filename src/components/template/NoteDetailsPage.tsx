@@ -39,7 +39,8 @@ export default function NoteDetailsPage() {
 
 		const index = newData!.notes.findIndex((item: { id: string }) => item.id === note.id);
 		newData!.notes.splice(index, 1, note);
-		saveStorage(newData! , setData);
+		setData(newData)
+		saveStorage(newData!);
 		toast.success("Note Edited Successfully");
 		changePage("notes")
 		syncHandler("auto" , setIsSyncing , setData)
@@ -56,8 +57,8 @@ export default function NoteDetailsPage() {
 		// newData!.folders.notesId;
 
 		newData!.removedItems.push(note.id);
-
-		saveStorage(newData! , setData);
+		setData(newData)
+		saveStorage(newData!);
 		toast.success("Note Removed Successfully");
 		changePage("notes")
 		syncHandler("auto" , setIsSyncing , setData)

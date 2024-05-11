@@ -18,9 +18,9 @@ type NoteType = {
 type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function EditFolderPage() {
-	const { pageName, isMounted, setIsMounted, changePage , setIsSyncing , data , setData } = useContext(Context);
-	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] }); 
-	const [settings , setSettings] = useState(loadSettings)
+	const { pageName, isMounted, setIsMounted, changePage, setIsSyncing, data, setData } = useContext(Context);
+	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
+	const [settings, setSettings] = useState(loadSettings);
 
 	useEffect(() => {
 		const newData = data;
@@ -40,15 +40,15 @@ export default function EditFolderPage() {
 			const folderIndex = newData!.folders.findIndex((item: FolderType) => item.id === folder.id);
 			newData!.folders.splice(folderIndex, 1, folder);
 			const newNotes = newData!.notes.map((note: NoteType) => {
-				note.folderId === folder.id && (note.folderName = folder.name);
+				note.folderId === folder.id && ((note.folderName = folder.name), (note.updatedAt = newDate));
 				return note;
 			});
 			newData!.notes = newNotes;
-
-			saveStorage(newData! , setData);
+			setData(newData);
+			saveStorage(newData!);
 			toast.success("Folder Edited Successfully");
 			changePage("folder");
-			syncHandler("auto" , setIsSyncing , setData)
+			syncHandler("auto", setIsSyncing, setData);
 		}
 	};
 
@@ -67,17 +67,20 @@ export default function EditFolderPage() {
 		});
 		newData!.notes = newNotes;
 		newData!.removedItems.push(folder.id);
-		saveStorage(newData! , setData);
+		setData(newData);
+		saveStorage(newData!);
 		toast.success("Folder Removed Successfully");
 		changePage("folders");
-		syncHandler("auto" , setIsSyncing , setData)
+		syncHandler("auto", setIsSyncing, setData);
 	};
 	return (
 		<div
-			className={`m-6 ${ settings.animations ? 
-				isMounted
-					? "animate-fade-up animate-duration-150 animate-ease-out"
-					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse" : ""
+			className={`m-6 ${
+				settings.animations
+					? isMounted
+						? "animate-fade-up animate-duration-150 animate-ease-out"
+						: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+					: ""
 			}`}>
 			<input
 				type="text"

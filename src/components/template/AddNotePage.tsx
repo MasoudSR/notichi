@@ -43,10 +43,11 @@ export default function AddNotePage() {
 			const newDate = new Date();
 			note.updatedAt = newDate;
 			newData!.notes.push(note);
-			saveStorage(newData! , setData);
+			setData(newData)
+			saveStorage(newData!);
 			toast.success("Note Added Successfully");
 			changePage("notes");
-			syncHandler("auto" , setIsSyncing , setData)
+			syncHandler("auto" , setIsSyncing ,setData)
 		}
 	};
 	return <NoteFields note={note} setNote={setNote} saveHandler={saveHandler} deleteHandler={null} />;

@@ -12,9 +12,8 @@ type DataType = {
 	removedItems: string[];
 };
 
-export default function saveStorage(data: DataType , setData:any) {
+export default function saveStorage(data: DataType) {
 	const newDate = new Date();
 	data.updatedAt = newDate;
-	setData(data)
 	localStorage.setItem("data", JSON.stringify(data));
 }

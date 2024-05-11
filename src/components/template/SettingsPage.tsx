@@ -35,7 +35,7 @@ export default function SettingsPage() {
 	};
 
 	const { status, data: session } = useSession();
-	const { isMounted, setIsMounted, prevPageName, selectedPageName , isSyncing , setIsSyncing , setData } = useContext(Context);
+	const { isMounted, setIsMounted, prevPageName, selectedPageName , isSyncing , setIsSyncing ,data ,setData } = useContext(Context);
 	const [clearStoragePopUp, setClearStoragePopUp] = useState(false);
 	const [settings, setSettings] = useState(loadSettings);
 	const [isOnline, setIsOnline] = useState(false);

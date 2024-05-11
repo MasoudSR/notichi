@@ -5,7 +5,8 @@ import React, { createContext, useEffect, useState } from "react";
 import { loadSettings } from "./../helpers/settingsManager";
 import loadStorage from "@/helpers/loadStorage";
 
-type DataType = {
+type DataType =
+	| {
 			updatedAt: string | Date;
 			notes: {
 				id: string;
@@ -31,6 +32,8 @@ export const Context = createContext<{
 	selectedPageName: string;
 	data: DataType | undefined;
 	setData: React.Dispatch<React.SetStateAction<DataType>>;
+	notification: (name: string) => void;
+	notifications: { successSync: boolean, failedSync: boolean }
 }>({
 	pageName: { name: "notes", id: "" },
 	prevPageName: { name: "", id: "" },
@@ -42,6 +45,8 @@ export const Context = createContext<{
 	selectedPageName: "",
 	data: undefined,
 	setData: () => {},
+	notification: () => {},
+	notifications : { successSync: false, failedSync: false }
 });
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
@@ -51,7 +56,24 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const [selectedPageName, setSelectedPageName] = useState<string>("");
 	const [isMounted, setIsMounted] = useState(false);
 	const [isSyncing, setIsSyncing] = useState(false);
+	const [notifications, setNotifications] = useState({ successSync: false, failedSync: false });
 	const [data, setData] = useState<DataType>();
+
+	function notification(name: string) {
+		if (name==="successSync") {
+			console.log(notifications)
+			setNotifications((prevState) => ({ ...prevState, successSync: true }));
+		setTimeout(() => {
+			setNotifications((prevState) => ({ ...prevState, successSync: false }));
+		}, 3000);
+		}else if (name==="failedSync") {
+			setNotifications((prevState) => ({ ...prevState, failedSync: true }));
+			setTimeout(() => {
+				setNotifications((prevState) => ({ ...prevState, failedSync: false }));
+			}, 3000);
+		}
+		
+	}
 
 	function changePage(newPage: string, id: string | undefined) {
 		const animations = loadSettings().animations;
@@ -94,6 +116,8 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 					setIsSyncing,
 					data,
 					setData,
+					notification,
+					notifications,
 				}}>
 				{children}
 			</Context.Provider>

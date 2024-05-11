@@ -11,7 +11,7 @@ import { Context } from "@/app/provider";
 import syncHandler from "@/helpers/syncHandler";
 
 export default function AddNotePage() {
-	const { changePage , setIsSyncing , data , setData } = useContext(Context);
+	const { changePage, setIsSyncing, data, setData, notification } = useContext(Context);
 
 	const [note, setNote] = useState<{
 		id: string;
@@ -43,11 +43,11 @@ export default function AddNotePage() {
 			const newDate = new Date();
 			note.updatedAt = newDate;
 			newData!.notes.push(note);
-			setData(newData)
+			setData(newData);
 			saveStorage(newData!);
 			toast.success("Note Added Successfully");
 			changePage("notes");
-			syncHandler("auto" , setIsSyncing ,setData)
+			syncHandler("auto", setIsSyncing, setData, notification);
 		}
 	};
 	return <NoteFields note={note} setNote={setNote} saveHandler={saveHandler} deleteHandler={null} />;

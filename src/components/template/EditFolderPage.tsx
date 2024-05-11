@@ -18,7 +18,8 @@ type NoteType = {
 type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function EditFolderPage() {
-	const { pageName, isMounted, setIsMounted, changePage, setIsSyncing, data, setData } = useContext(Context);
+	const { pageName, isMounted, setIsMounted, changePage, setIsSyncing, data, setData, notification } =
+		useContext(Context);
 	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
 	const [settings, setSettings] = useState(loadSettings);
 
@@ -48,7 +49,7 @@ export default function EditFolderPage() {
 			saveStorage(newData!);
 			toast.success("Folder Edited Successfully");
 			changePage("folder");
-			syncHandler("auto", setIsSyncing, setData);
+			syncHandler("auto", setIsSyncing, setData, notification);
 		}
 	};
 
@@ -71,7 +72,7 @@ export default function EditFolderPage() {
 		saveStorage(newData!);
 		toast.success("Folder Removed Successfully");
 		changePage("folders");
-		syncHandler("auto", setIsSyncing, setData);
+		syncHandler("auto", setIsSyncing, setData, notification);
 	};
 	return (
 		<div

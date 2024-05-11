@@ -10,7 +10,7 @@ import { Context } from "@/app/provider";
 import syncHandler from "@/helpers/syncHandler";
 
 export default function NoteDetailsPage() {
-	const { pageName ,changePage , setIsSyncing , data , setData } = useContext(Context);
+	const { pageName, changePage, setIsSyncing, data, setData, notification } = useContext(Context);
 
 	const [note, setNote] = useState<{
 		id: string;
@@ -39,11 +39,11 @@ export default function NoteDetailsPage() {
 
 		const index = newData!.notes.findIndex((item: { id: string }) => item.id === note.id);
 		newData!.notes.splice(index, 1, note);
-		setData(newData)
+		setData(newData);
 		saveStorage(newData!);
 		toast.success("Note Edited Successfully");
-		changePage("notes")
-		syncHandler("auto" , setIsSyncing , setData)
+		changePage("notes");
+		syncHandler("auto", setIsSyncing, setData, notification);
 	};
 
 	const deleteHandler = () => {
@@ -57,11 +57,11 @@ export default function NoteDetailsPage() {
 		// newData!.folders.notesId;
 
 		newData!.removedItems.push(note.id);
-		setData(newData)
+		setData(newData);
 		saveStorage(newData!);
 		toast.success("Note Removed Successfully");
-		changePage("notes")
-		syncHandler("auto" , setIsSyncing , setData)
+		changePage("notes");
+		syncHandler("auto", setIsSyncing, setData, notification);
 	};
 
 	useEffect(() => {

@@ -9,14 +9,14 @@ import { loadSettings } from "@/helpers/settingsManager";
 import syncHandler from "@/helpers/syncHandler";
 
 export default function NewFolderPage() {
-	const { changePage, isMounted, setIsMounted , setIsSyncing , data , setData } = useContext(Context);
+	const { changePage, isMounted, setIsMounted, setIsSyncing, data, setData, notification } = useContext(Context);
 	const [folder, setFolder] = useState<{ id: string; updatedAt: Date | string; name: string; notesId: [] }>({
 		id: "",
 		updatedAt: "",
 		name: "",
 		notesId: [],
 	});
-	const [settings , setSettings] = useState(loadSettings)
+	const [settings, setSettings] = useState(loadSettings);
 
 	useEffect(() => {
 		const id: string = nanoid();
@@ -32,20 +32,22 @@ export default function NewFolderPage() {
 			const newDate = new Date();
 			folder.updatedAt = newDate;
 			newData!.folders.push(folder);
-			setData(newData)
+			setData(newData);
 			saveStorage(newData!);
 			toast.success("Folder Created");
 			changePage("folders");
-			syncHandler("auto" , setIsSyncing,setData)
+			syncHandler("auto", setIsSyncing, setData, notification);
 		}
 	};
 
 	return (
 		<div
-			className={`m-6 ${ settings.animations ?
-				isMounted
-					? "animate-fade-up animate-duration-150 animate-ease-out"
-					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse" : ""
+			className={`m-6 ${
+				settings.animations
+					? isMounted
+						? "animate-fade-up animate-duration-150 animate-ease-out"
+						: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+					: ""
 			}`}>
 			<input
 				type="text"

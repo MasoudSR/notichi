@@ -35,7 +35,7 @@ export default function SettingsPage() {
 	};
 
 	const { status, data: session } = useSession();
-	const { isMounted, setIsMounted, prevPageName, selectedPageName , isSyncing , setIsSyncing ,data ,setData } = useContext(Context);
+	const { isMounted, setIsMounted, prevPageName, selectedPageName , isSyncing , setIsSyncing ,data ,setData ,notification } = useContext(Context);
 	const [clearStoragePopUp, setClearStoragePopUp] = useState(false);
 	const [settings, setSettings] = useState(loadSettings);
 	const [isOnline, setIsOnline] = useState(false);
@@ -115,7 +115,7 @@ export default function SettingsPage() {
 											className={`${
 												isSyncing ? "bg-[#70b5ff]" : "bg-[#017AFF]"
 											} text-white text-lg p-3 rounded-lg shadow-md shadow-[#017AFF]/30 col-span-2 `}
-											onClick={() => syncHandler("force", setIsSyncing, setData)}
+											onClick={() => syncHandler("force", setIsSyncing, setData , notification)}
 											disabled={isSyncing}>
 											{isSyncing ? "Sync in Progress..." : "Sync Now"}
 										</button>

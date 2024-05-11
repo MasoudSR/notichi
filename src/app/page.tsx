@@ -19,7 +19,7 @@ import syncHandler from "@/helpers/syncHandler";
 
 export default function Home() {
 	const { status, data: session } = useSession();
-	const { pageName , setData , data , changePage , setIsSyncing } = useContext(Context);
+	const { pageName , setData , data , changePage , setIsSyncing , notification } = useContext(Context);
 
 	// const syncHandler = async () => {
 	// 	const settings = loadSettings();
@@ -58,7 +58,7 @@ export default function Home() {
 		const storageData = loadStorage();
 		setData(storageData)
 		// changePage("notes")
-		syncHandler("auto" , setIsSyncing, setData)
+		syncHandler("auto" , setIsSyncing, setData , notification)
 	}, [])
 	
 

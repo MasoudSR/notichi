@@ -9,6 +9,7 @@ import Shadow from "../module/Shadow";
 import { loadSettings, saveSettings } from "@/helpers/settingsManager";
 import syncHandler from "@/helpers/syncHandler";
 import { PiUserCircleDuotone } from "react-icons/pi";
+import loadStorage from "@/helpers/loadStorage";
 
 export default function SettingsPage() {
 	const animationsBtnHandler = (checkbox: any) => {
@@ -34,7 +35,7 @@ export default function SettingsPage() {
 	};
 
 	const { status, data: session } = useSession();
-	const { isMounted, setIsMounted, prevPageName, selectedPageName , isSyncing , setIsSyncing } = useContext(Context);
+	const { isMounted, setIsMounted, prevPageName, selectedPageName , isSyncing , setIsSyncing , setData } = useContext(Context);
 	const [clearStoragePopUp, setClearStoragePopUp] = useState(false);
 	const [settings, setSettings] = useState(loadSettings);
 	const [isOnline, setIsOnline] = useState(false);
@@ -54,6 +55,7 @@ export default function SettingsPage() {
 	const clearStorageHandler = () => {
 		localStorage.removeItem("data");
 		setClearStoragePopUp(false);
+		setData(loadStorage)
 	};
 
 	const animations = settings.animations
@@ -113,7 +115,7 @@ export default function SettingsPage() {
 											className={`${
 												isSyncing ? "bg-[#70b5ff]" : "bg-[#017AFF]"
 											} text-white text-lg p-3 rounded-lg shadow-md shadow-[#017AFF]/30 col-span-2 `}
-											onClick={() => syncHandler("force", setIsSyncing)}
+											onClick={() => syncHandler("force", setIsSyncing, setData)}
 											disabled={isSyncing}>
 											{isSyncing ? "Sync in Progress..." : "Sync Now"}
 										</button>

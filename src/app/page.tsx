@@ -15,47 +15,57 @@ import { loadSettings } from "@/helpers/settingsManager";
 import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
 import { toast } from "react-hot-toast";
+import syncHandler from "@/helpers/syncHandler";
 
 export default function Home() {
 	const { status, data: session } = useSession();
-	const { pageName } = useContext(Context);
+	const { pageName , setData , data , changePage , setIsSyncing } = useContext(Context);
 
-	const syncHandler = async () => {
-		const settings = loadSettings();
-		if (settings.autoSync) {
-			if (status === "authenticated") {
-				const data = loadStorage();
+	// const syncHandler = async () => {
+	// 	const settings = loadSettings();
+	// 	if (settings.autoSync) {
+	// 		if (status === "authenticated") {
+	// 			const data = loadStorage();
 
-				await toast.promise(
-					fetch("/api/cloud", {
-						method: "POST",
-						headers: { "Content-Type": "application-json" },
-						body: JSON.stringify(data),
-					}),
-					{
-						loading: "AutoSync in Progress ...",
-						success: (res) => {
-							if (!res.ok) {
-								throw new Error(`${res.status}`);
-							}
-							const promise = res.json();
-							promise.then((result) => {
-								saveStorage(result);
-							});
-							return "Data Synced Successfully";
-						},
-						error: (e) => {
-							return `Sync Failed. ${e}`;
-						},
-					}
-				);
-			}
-		}
-	};
+	// 			await toast.promise(
+	// 				fetch("/api/cloud", {
+	// 					method: "POST",
+	// 					headers: { "Content-Type": "application-json" },
+	// 					body: JSON.stringify(data),
+	// 				}),
+	// 				{
+	// 					loading: "AutoSync in Progress ...",
+	// 					success: (res) => {
+	// 						if (!res.ok) {
+	// 							throw new Error(`${res.status}`);
+	// 						}
+	// 						const promise = res.json();
+	// 						promise.then((result) => {
+	// 							saveStorage(result , setData);
+	// 						});
+	// 						return "Data Synced Successfully";
+	// 					},
+	// 					error: (e) => {
+	// 						return `Sync Failed. ${e}`;
+	// 					},
+	// 				}
+	// 			);
+	// 		}
+	// 	}
+	// };
+	
+	useEffect(() => {
+		const storageData = loadStorage();
+		setData(storageData)
+		// changePage("notes")
+		syncHandler("auto" , setIsSyncing , setData)
+	}, [])
+	
 
 	useEffect(() => {
-		navigator.onLine && syncHandler();
-	}, [status]);
+		// navigator.onLine && syncHandler();
+	}, []);
+
 
 	return (
 		<>

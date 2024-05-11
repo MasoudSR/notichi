@@ -2,14 +2,14 @@
 import { useContext, useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import saveStorage from "@/helpers/saveStorage";
-import loadStorage from "@/helpers/loadStorage";
+// import loadStorage from "@/helpers/loadStorage";
 import { toast } from "react-hot-toast";
 import { Context } from "@/app/provider";
 import { loadSettings } from "@/helpers/settingsManager";
 import syncHandler from "@/helpers/syncHandler";
 
 export default function NewFolderPage() {
-	const { changePage, isMounted, setIsMounted , setIsSyncing } = useContext(Context);
+	const { changePage, isMounted, setIsMounted , setIsSyncing , data , setData } = useContext(Context);
 	const [folder, setFolder] = useState<{ id: string; updatedAt: Date | string; name: string; notesId: [] }>({
 		id: "",
 		updatedAt: "",
@@ -28,14 +28,14 @@ export default function NewFolderPage() {
 		if (folder.name === "") {
 			changePage("folders");
 		} else {
-			const data = loadStorage();
+			const newData = data;
 			const newDate = new Date();
 			folder.updatedAt = newDate;
-			data.folders.push(folder);
-			saveStorage(data);
+			newData!.folders.push(folder);
+			saveStorage(newData!,setData);
 			toast.success("Folder Created");
 			changePage("folders");
-			syncHandler("auto" , setIsSyncing)
+			syncHandler("auto" , setIsSyncing ,setData)
 		}
 	};
 

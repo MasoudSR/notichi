@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import saveStorage from "@/helpers/saveStorage";
-import loadStorage from "@/helpers/loadStorage";
+// import loadStorage from "@/helpers/loadStorage";
 import { toast } from "react-hot-toast";
 import { Context } from "@/app/provider";
 import { loadSettings } from "@/helpers/settingsManager";
@@ -18,14 +18,14 @@ type NoteType = {
 type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function EditFolderPage() {
-	const { pageName, isMounted, setIsMounted, changePage , setIsSyncing } = useContext(Context);
+	const { pageName, isMounted, setIsMounted, changePage , setIsSyncing , data , setData } = useContext(Context);
 	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] }); 
 	const [settings , setSettings] = useState(loadSettings)
 
 	useEffect(() => {
-		const data = loadStorage();
-		const oldFolder = data.folders.find((item: FolderType) => item.id === pageName.id);
-		setFolder(oldFolder);
+		const newData = data;
+		const oldFolder = newData!.folders.find((item: FolderType) => item.id === pageName.id);
+		setFolder(oldFolder!);
 		setIsMounted(true);
 	}, []);
 
@@ -36,27 +36,27 @@ export default function EditFolderPage() {
 			const newDate = new Date();
 			folder.updatedAt = newDate;
 
-			const data = loadStorage();
-			const folderIndex = data.folders.findIndex((item: FolderType) => item.id === folder.id);
-			data.folders.splice(folderIndex, 1, folder);
-			const newNotes = data.notes.map((note: NoteType) => {
+			const newData = data;
+			const folderIndex = newData!.folders.findIndex((item: FolderType) => item.id === folder.id);
+			newData!.folders.splice(folderIndex, 1, folder);
+			const newNotes = newData!.notes.map((note: NoteType) => {
 				note.folderId === folder.id && (note.folderName = folder.name);
 				return note;
 			});
-			data.notes = newNotes;
+			newData!.notes = newNotes;
 
-			saveStorage(data);
+			saveStorage(newData! , setData);
 			toast.success("Folder Edited Successfully");
 			changePage("folder");
-			syncHandler("auto" , setIsSyncing)
+			syncHandler("auto" , setIsSyncing , setData)
 		}
 	};
 
 	const deleteHandler = () => {
-		const data = loadStorage();
-		const folderIndex = data.folders.findIndex((item: FolderType) => item.id === folder.id);
-		data.folders.splice(folderIndex, 1);
-		const newNotes = data.notes.map((note: NoteType) => {
+		const newData = data;
+		const folderIndex = newData!.folders.findIndex((item: FolderType) => item.id === folder.id);
+		newData!.folders.splice(folderIndex, 1);
+		const newNotes = newData!.notes.map((note: NoteType) => {
 			if (note.folderId === folder.id) {
 				note.folderName = "";
 				note.folderId = "";
@@ -65,12 +65,12 @@ export default function EditFolderPage() {
 			}
 			return note;
 		});
-		data.notes = newNotes;
-		data.removedItems.push(folder.id);
-		saveStorage(data);
+		newData!.notes = newNotes;
+		newData!.removedItems.push(folder.id);
+		saveStorage(newData! , setData);
 		toast.success("Folder Removed Successfully");
 		changePage("folders");
-		syncHandler("auto" , setIsSyncing)
+		syncHandler("auto" , setIsSyncing , setData)
 	};
 	return (
 		<div

@@ -7,11 +7,7 @@ import { loadSettings } from "@/helpers/settingsManager";
 import React, { useContext, useEffect, useState } from "react";
 import { CgFileAdd } from "react-icons/cg";
 
-type DataType = {
-	updatedAt: string | Date;
-	notes: { id: string; updatedAt: string | Date; title: string; text: string; folderId: string; folderName: string }[];
-	folders: { id: string; updatedAt: string | Date; name: string; notesId: string[] }[];
-};
+
 type NoteType = {
 	id: string;
 	updatedAt: string | Date;
@@ -23,18 +19,18 @@ type NoteType = {
 
 export default function AllNotesPage() {
 	const [notes, setNotes] = useState<NoteType[]>([]);
-	const [data, setData] = useState<DataType>();
-	const { isMounted, setIsMounted, prevPageName, selectedPageName } = useContext(Context);
+	// const [data, setData] = useState<DataType>();
+	const { isMounted, setIsMounted, prevPageName, selectedPageName , data } = useContext(Context);
 	const [settings, setSettings] = useState({ animations: true });
 	const [search, setSearch] = useState("");
 
 	useEffect(() => {
-		const storageData = loadStorage();
-		setData(storageData);
-		setNotes(storageData.notes);
+		// const storageData = loadStorage();
+		// setData(storageData);
+		setNotes(data?.notes ?? []);
 		setIsMounted(true);
 		setSettings(loadSettings);
-	}, []);
+	}, [data]);
 
 	const searchHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		const value = e.target.value;

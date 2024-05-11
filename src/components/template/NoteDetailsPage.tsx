@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from "react";
 import NoteFields from "../module/NoteFields";
-import loadStorage from "@/helpers/loadStorage";
+// import loadStorage from "@/helpers/loadStorage";
 import saveStorage from "@/helpers/saveStorage";
 import { addToFolder, deleteFromFolder } from "@/helpers/folderManager";
 import { toast } from "react-hot-toast";
@@ -10,7 +10,7 @@ import { Context } from "@/app/provider";
 import syncHandler from "@/helpers/syncHandler";
 
 export default function NoteDetailsPage() {
-	const { pageName ,changePage , setIsSyncing } = useContext(Context);
+	const { pageName ,changePage , setIsSyncing , data , setData } = useContext(Context);
 
 	const [note, setNote] = useState<{
 		id: string;
@@ -29,44 +29,44 @@ export default function NoteDetailsPage() {
 	});
 
 	const saveHandler = () => {
-		const data = loadStorage();
+		const newData = data;
 
-		deleteFromFolder(data, note.id);
-		addToFolder(data, note.id, note.folderId);
+		deleteFromFolder(newData!, note.id);
+		addToFolder(newData!, note.id, note.folderId);
 
 		const newDate = new Date();
 		note.updatedAt = newDate;
 
-		const index = data.notes.findIndex((item: { id: string }) => item.id === note.id);
-		data.notes.splice(index, 1, note);
-		saveStorage(data);
+		const index = newData!.notes.findIndex((item: { id: string }) => item.id === note.id);
+		newData!.notes.splice(index, 1, note);
+		saveStorage(newData! , setData);
 		toast.success("Note Edited Successfully");
 		changePage("notes")
-		syncHandler("auto" , setIsSyncing)
+		syncHandler("auto" , setIsSyncing , setData)
 	};
 
 	const deleteHandler = () => {
-		const data = loadStorage();
+		const newData = data;
 
-		deleteFromFolder(data, note.id);
+		deleteFromFolder(newData!, note.id);
 
-		const index = data.notes.findIndex((item: { id: string }) => item.id === note.id);
-		data.notes.splice(index, 1);
+		const index = newData!.notes.findIndex((item: { id: string }) => item.id === note.id);
+		newData!.notes.splice(index, 1);
 
-		data.folders.notesId;
+		// newData!.folders.notesId;
 
-		data.removedItems.push(note.id);
+		newData!.removedItems.push(note.id);
 
-		saveStorage(data);
+		saveStorage(newData! , setData);
 		toast.success("Note Removed Successfully");
 		changePage("notes")
-		syncHandler("auto" , setIsSyncing)
+		syncHandler("auto" , setIsSyncing , setData)
 	};
 
 	useEffect(() => {
-		const data = loadStorage();
-		const oldNote = data.notes.find((note: { id: string; title: string; text: string }) => note.id === pageName.id);
-		setNote(oldNote);
+		const newData = data;
+		const oldNote = newData!.notes.find((note: { id: string; title: string; text: string }) => note.id === pageName.id);
+		setNote(oldNote!);
 	}, []);
 	return (
 		<>

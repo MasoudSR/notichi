@@ -3,7 +3,24 @@ import loadStorage from "./loadStorage";
 import saveStorage from "./saveStorage";
 import { loadSettings } from "./settingsManager";
 
-async function sync(setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>) {
+type DataType = {
+	updatedAt: string | Date;
+	notes: {
+		id: string;
+		updatedAt: string | Date;
+		title: string;
+		text: string;
+		folderId: string;
+		folderName: string;
+	}[];
+	folders: { id: string; updatedAt: string | Date; name: string; notesId: string[] }[];
+	removedItems: string[];
+};
+
+async function sync(
+	setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>,
+	setData: React.Dispatch<React.SetStateAction<DataType>>
+) {
 	const data = loadStorage();
 
 	setIsSyncing(true);
@@ -37,7 +54,7 @@ async function sync(setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>)
 	})
 		.then((res) => res.json())
 		.then((data) => {
-			saveStorage(data);
+			saveStorage(data, setData);
 			toast.success("Data Synced Successfully");
 			setIsSyncing(false);
 		})
@@ -45,17 +62,20 @@ async function sync(setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>)
 			toast.error(`Sync Failed. ${e}`);
 			setIsSyncing(false);
 		});
-
 }
 
-export default function syncHandler(type: string, setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>) {
+export default function syncHandler(
+	type: string,
+	setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>,
+	setData: any
+) {
 	if (navigator.onLine) {
 		if (type === "force") {
-			sync(setIsSyncing);
+			sync(setIsSyncing, setData);
 		} else if (type === "auto") {
 			const settings = loadSettings();
 			if (settings.autoSync) {
-				sync(setIsSyncing);
+				sync(setIsSyncing, setData);
 			}
 		}
 	}

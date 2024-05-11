@@ -2,7 +2,23 @@
 
 import { SessionProvider } from "next-auth/react";
 import React, { createContext, useEffect, useState } from "react";
-import { loadSettings } from './../helpers/settingsManager';
+import { loadSettings } from "./../helpers/settingsManager";
+import loadStorage from "@/helpers/loadStorage";
+
+type DataType = {
+			updatedAt: string | Date;
+			notes: {
+				id: string;
+				updatedAt: string | Date;
+				title: string;
+				text: string;
+				folderId: string;
+				folderName: string;
+			}[];
+			folders: { id: string; updatedAt: string | Date; name: string; notesId: string[] }[];
+			removedItems: string[];
+	  }
+	| undefined;
 
 export const Context = createContext<{
 	pageName: { name: string; id: string };
@@ -13,6 +29,8 @@ export const Context = createContext<{
 	setIsMounted: React.Dispatch<React.SetStateAction<boolean>>;
 	setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>;
 	selectedPageName: string;
+	data: DataType | undefined;
+	setData: React.Dispatch<React.SetStateAction<DataType>>;
 }>({
 	pageName: { name: "notes", id: "" },
 	prevPageName: { name: "", id: "" },
@@ -22,6 +40,8 @@ export const Context = createContext<{
 	setIsMounted: () => {},
 	setIsSyncing: () => {},
 	selectedPageName: "",
+	data: undefined,
+	setData: () => {},
 });
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
@@ -31,10 +51,10 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const [selectedPageName, setSelectedPageName] = useState<string>("");
 	const [isMounted, setIsMounted] = useState(false);
 	const [isSyncing, setIsSyncing] = useState(false);
+	const [data, setData] = useState<DataType>();
 
-	
 	function changePage(newPage: string, id: string | undefined) {
-		const animations = loadSettings().animations
+		const animations = loadSettings().animations;
 		if (newPage !== "back") {
 			setIsMounted(false);
 			setSelectedPageName(newPage);
@@ -45,10 +65,13 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 				history.push(pageName);
 			}
 			setPageHistory(history);
-			setTimeout(() => {
-				setPrevPageName(pageName);
-				id ? setPageName({ name: newPage, id: id }) : setPageName({ ...pageName, name: newPage });
-			}, animations ? 150 : 0);
+			setTimeout(
+				() => {
+					setPrevPageName(pageName);
+					id ? setPageName({ name: newPage, id: id }) : setPageName({ ...pageName, name: newPage });
+				},
+				animations ? 150 : 0
+			);
 		} else if (newPage === "back") {
 			const history: { name: string; id: string }[] = pageHistory;
 			const prevPage: { name: string; id: string } = history.pop()!;
@@ -69,6 +92,8 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 					pageName,
 					isSyncing,
 					setIsSyncing,
+					data,
+					setData,
 				}}>
 				{children}
 			</Context.Provider>

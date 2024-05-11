@@ -1,5 +1,5 @@
 import { Context } from "@/app/provider";
-import loadStorage from "@/helpers/loadStorage";
+// import loadStorage from "@/helpers/loadStorage";
 import { loadSettings } from "@/helpers/settingsManager";
 import React, { useContext, useEffect, useState } from "react";
 import { LuFolderPlus } from "react-icons/lu";
@@ -25,7 +25,7 @@ export default function AddToFolder({
 	setNote: React.Dispatch<React.SetStateAction<NoteType>>;
 	setShowFolders: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-	const { changePage } = useContext(Context);
+	const { changePage , data } = useContext(Context);
 	const [folders, setFolders] = useState<FolderType[]>([]);
 	const [settings] = useState(loadSettings)
 
@@ -35,8 +35,8 @@ export default function AddToFolder({
 	};
 
 	useEffect(() => {
-		const data = loadStorage();
-		setFolders(data.folders);
+		// const data = loadStorage();
+		setFolders(data!.folders);
 	}, []);
 	return (
 		<div

@@ -1,19 +1,19 @@
 "use client";
 
-import loadStorage from "@/helpers/loadStorage";
+// import loadStorage from "@/helpers/loadStorage";
 import Folder from "../module/Folder";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "@/app/provider";
 import { loadSettings } from "@/helpers/settingsManager";
 
 export default function FoldersPage() {
-	const [folders, setFolders] = useState<{ id: string; updatedAt: string | Date; name: string; notesId: [] }[]>([]);
-	const { isMounted, setIsMounted, prevPageName, selectedPageName } = useContext(Context);
+	const [folders, setFolders] = useState<{ id: string; updatedAt: string | Date; name: string; notesId: string[] }[]>([]);
+	const { isMounted, setIsMounted, prevPageName, selectedPageName , data } = useContext(Context);
 	const [settings , setSettings] = useState(loadSettings)
 
 	useEffect(() => {
-		const data = loadStorage();
-		setFolders(data.folders);
+		// const data = loadStorage();
+		setFolders(data!.folders);
 		setIsMounted(true);
 	}, []);
 	return (

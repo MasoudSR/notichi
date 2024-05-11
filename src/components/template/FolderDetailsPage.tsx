@@ -14,29 +14,32 @@ type NoteType = {
 	folderId: string;
 	folderName: string;
 };
+
 type FolderType = { id: string; updatedAt: string | Date; name: string; notesId: string[] };
 
 export default function FolderDetailsPage() {
-	const { pageName, isMounted, setIsMounted, changePage } = useContext(Context);
+	const { pageName, isMounted, setIsMounted, changePage, data } = useContext(Context);
 	const [notes, setNotes] = useState<NoteType[]>([]);
 	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
-	const [settings , setSettings] = useState(loadSettings)
+	const [settings, setSettings] = useState(loadSettings);
 
 	useEffect(() => {
-		const data = loadStorage();
-		const folderNotes = data.notes.filter((note: NoteType) => note.folderId === pageName.id);
-		const oldFolder = data.folders.find((item: FolderType) => item.id === pageName.id);
-		setFolder(oldFolder);
+		// const data = loadStorage();
+		const folderNotes = data!.notes.filter((note: NoteType) => note.folderId === pageName.id);
+		const oldFolder = data!.folders.find((item: FolderType) => item.id === pageName.id);
+		setFolder(oldFolder!);
 		setNotes(folderNotes);
 		setIsMounted(true);
 	}, []);
 
 	return (
 		<div
-			className={`${ settings.animations ?
-				isMounted
-					? "animate-fade-up animate-duration-150 animate-ease-out"
-					: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse" : ""
+			className={`${
+				settings.animations
+					? isMounted
+						? "animate-fade-up animate-duration-150 animate-ease-out"
+						: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+					: ""
 			}`}>
 			<div
 				className="m-6 font-medium flex justify-between bg-white rounded-lg py-3 px-5 cursor-pointer"

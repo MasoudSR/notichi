@@ -8,9 +8,11 @@ import { addToFolder, deleteFromFolder } from "@/helpers/folderManager";
 import { toast } from "react-hot-toast";
 import { Context } from "@/app/provider";
 import syncHandler from "@/helpers/syncHandler";
+import { useSession } from "next-auth/react";
 
 export default function NoteDetailsPage() {
 	const { pageName, changePage, setIsSyncing, data, setData, notification } = useContext(Context);
+	const { status } = useSession();
 
 	const [note, setNote] = useState<{
 		id: string;
@@ -43,7 +45,7 @@ export default function NoteDetailsPage() {
 		saveStorage(newData!);
 		toast.success("Note Edited Successfully");
 		changePage("notes");
-		syncHandler("auto", setIsSyncing, setData, notification);
+		syncHandler("auto", setIsSyncing, setData, notification, status);
 	};
 
 	const deleteHandler = () => {
@@ -61,7 +63,7 @@ export default function NoteDetailsPage() {
 		saveStorage(newData!);
 		toast.success("Note Removed Successfully");
 		changePage("notes");
-		syncHandler("auto", setIsSyncing, setData, notification);
+		syncHandler("auto", setIsSyncing, setData, notification, status);
 	};
 
 	useEffect(() => {

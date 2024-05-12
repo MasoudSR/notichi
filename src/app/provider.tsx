@@ -61,7 +61,6 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 
 	function notification(name: string) {
 		if (name==="successSync") {
-			console.log(notifications)
 			setNotifications((prevState) => ({ ...prevState, successSync: true }));
 		setTimeout(() => {
 			setNotifications((prevState) => ({ ...prevState, successSync: false }));

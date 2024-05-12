@@ -57,15 +57,9 @@ export default function Home() {
 	useEffect(() => {
 		const storageData = loadStorage();
 		setData(storageData)
-		// changePage("notes")
-		syncHandler("auto" , setIsSyncing, setData , notification)
-	}, [])
+		syncHandler("auto" , setIsSyncing, setData , notification , status)
+	}, [status])
 	
-
-	useEffect(() => {
-		// navigator.onLine && syncHandler();
-	}, []);
-
 
 	return (
 		<>

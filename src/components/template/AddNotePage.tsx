@@ -9,6 +9,7 @@ import { addToFolder } from "@/helpers/folderManager";
 import { toast } from "react-hot-toast";
 import { Context } from "@/app/provider";
 import syncHandler from "@/helpers/syncHandler";
+import { useSession } from "next-auth/react";
 
 export default function AddNotePage() {
 	const { changePage, setIsSyncing, data, setData, notification } = useContext(Context);
@@ -29,6 +30,8 @@ export default function AddNotePage() {
 		folderName: "",
 	});
 
+	const { status } = useSession();
+
 	useEffect(() => {
 		const id: string = nanoid();
 		setNote({ ...note, id });
@@ -47,7 +50,7 @@ export default function AddNotePage() {
 			saveStorage(newData!);
 			toast.success("Note Added Successfully");
 			changePage("notes");
-			syncHandler("auto", setIsSyncing, setData, notification);
+			syncHandler("auto", setIsSyncing, setData, notification, status);
 		}
 	};
 	return <NoteFields note={note} setNote={setNote} saveHandler={saveHandler} deleteHandler={null} />;

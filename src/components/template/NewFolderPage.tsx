@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { Context } from "@/app/provider";
 import { loadSettings } from "@/helpers/settingsManager";
 import syncHandler from "@/helpers/syncHandler";
+import { useSession } from "next-auth/react";
 
 export default function NewFolderPage() {
 	const { changePage, isMounted, setIsMounted, setIsSyncing, data, setData, notification } = useContext(Context);
@@ -17,6 +18,7 @@ export default function NewFolderPage() {
 		notesId: [],
 	});
 	const [settings, setSettings] = useState(loadSettings);
+	const { status } = useSession();
 
 	useEffect(() => {
 		const id: string = nanoid();
@@ -36,7 +38,7 @@ export default function NewFolderPage() {
 			saveStorage(newData!);
 			toast.success("Folder Created");
 			changePage("folders");
-			syncHandler("auto", setIsSyncing, setData, notification);
+			syncHandler("auto", setIsSyncing, setData, notification,status);
 		}
 	};
 

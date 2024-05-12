@@ -20,7 +20,7 @@ type DataType = {
 function sync(
 	setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>,
 	setData: React.Dispatch<React.SetStateAction<DataType>>,
-	notification : (name: string)=>void
+	notification: (name: string) => void
 ) {
 	const data = loadStorage();
 
@@ -55,16 +55,16 @@ function sync(
 	})
 		.then((res) => res.json())
 		.then((data) => {
-			setData(data)
+			setData(data);
 			saveStorage(data);
 			// toast.success("Data Synced Successfully");
 			setIsSyncing(false);
-			notification("successSync")
+			notification("successSync");
 		})
 		.catch((e) => {
 			toast.error(`Sync Failed. ${e}`);
 			setIsSyncing(false);
-			notification("failedSync")
+			notification("failedSync");
 		});
 }
 
@@ -72,15 +72,18 @@ export default function syncHandler(
 	type: string,
 	setIsSyncing: React.Dispatch<React.SetStateAction<boolean>>,
 	setData: any,
-	notification : (name: string)=>void
+	notification: (name: string) => void,
+	status:string
 ) {
 	if (navigator.onLine) {
-		if (type === "force") {
-			sync(setIsSyncing, setData , notification);
-		} else if (type === "auto") {
-			const settings = loadSettings();
-			if (settings.autoSync) {
-				sync(setIsSyncing, setData , notification);
+		if (status === "authenticated") {
+			if (type === "force") {
+				sync(setIsSyncing, setData, notification);
+			} else if (type === "auto") {
+				const settings = loadSettings();
+				if (settings.autoSync) {
+					sync(setIsSyncing, setData, notification);
+				}
 			}
 		}
 	}

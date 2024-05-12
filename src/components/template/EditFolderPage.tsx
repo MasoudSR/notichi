@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { Context } from "@/app/provider";
 import { loadSettings } from "@/helpers/settingsManager";
 import syncHandler from "@/helpers/syncHandler";
+import { useSession } from "next-auth/react";
 
 type NoteType = {
 	id: string;
@@ -22,6 +23,7 @@ export default function EditFolderPage() {
 		useContext(Context);
 	const [folder, setFolder] = useState<FolderType>({ id: "", updatedAt: "", name: "", notesId: [] });
 	const [settings, setSettings] = useState(loadSettings);
+	const { status } = useSession();
 
 	useEffect(() => {
 		const newData = data;
@@ -49,7 +51,7 @@ export default function EditFolderPage() {
 			saveStorage(newData!);
 			toast.success("Folder Edited Successfully");
 			changePage("folder");
-			syncHandler("auto", setIsSyncing, setData, notification);
+			syncHandler("auto", setIsSyncing, setData, notification, status);
 		}
 	};
 
@@ -72,7 +74,7 @@ export default function EditFolderPage() {
 		saveStorage(newData!);
 		toast.success("Folder Removed Successfully");
 		changePage("folders");
-		syncHandler("auto", setIsSyncing, setData, notification);
+		syncHandler("auto", setIsSyncing, setData, notification, status);
 	};
 	return (
 		<div

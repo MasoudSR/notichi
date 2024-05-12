@@ -4,11 +4,12 @@ import { BiArrowBack } from "react-icons/bi";
 import { LuFolderPlus } from "react-icons/lu";
 import { useContext } from "react";
 import { Context } from "@/app/provider";
-import { TbCloud, TbCloudCheck,TbCloudCancel } from "react-icons/tb";
+import { TbCloud, TbCloudCheck, TbCloudCancel, TbFolderCheck } from "react-icons/tb";
 import { IoSyncOutline } from "react-icons/io5";
+import { LuFileCheck2 } from "react-icons/lu";
 
 export default function Header() {
-	const { pageName, changePage, isSyncing , notifications } = useContext(Context);
+	const { pageName, changePage, isSyncing, notifications } = useContext(Context);
 	const pathCheck = () => {
 		const paths = ["notes", "folders", "settings"];
 		return paths.includes(pageName.name);
@@ -27,6 +28,16 @@ export default function Header() {
 					</button>
 				)}
 				<span className="text-3xl">Notichi</span>
+				{notifications.noteCheck && (
+					<span className="ml-3">
+						<LuFileCheck2 size={27} />
+					</span>
+				)}
+				{notifications.folderCheck && (
+					<span className="ml-3">
+						<TbFolderCheck size={27} />
+					</span>
+				)}
 			</div>
 			<span className="flex">
 				{isSyncing && (
@@ -35,16 +46,16 @@ export default function Header() {
 						<IoSyncOutline size={27} className="animate-spin" />
 					</span>
 				)}
-				{notifications.successSync && 
-				<span className="relative mr-3">
-					<TbCloudCheck size={27} />
-				</span>
-				}
-				{notifications.failedSync && 
-				<span className="relative mr-3">
-					<TbCloudCancel size={27} />
-				</span>
-				}
+				{notifications.successSync && (
+					<span className="relative mr-3">
+						<TbCloudCheck size={27} />
+					</span>
+				)}
+				{notifications.failedSync && (
+					<span className="relative mr-3">
+						<TbCloudCancel size={27} />
+					</span>
+				)}
 				{pageName.name === "folders" && (
 					<button
 						onClick={() => {

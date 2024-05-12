@@ -49,7 +49,9 @@ export default function EditFolderPage() {
 			newData!.notes = newNotes;
 			setData(newData);
 			saveStorage(newData!);
-			toast.success("Folder Edited Successfully");
+			// toast.success("Folder Edited Successfully");
+			notification("folderCheck")
+
 			changePage("folder");
 			syncHandler("auto", setIsSyncing, setData, notification, status);
 		}

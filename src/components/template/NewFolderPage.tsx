@@ -36,7 +36,8 @@ export default function NewFolderPage() {
 			newData!.folders.push(folder);
 			setData(newData);
 			saveStorage(newData!);
-			toast.success("Folder Created");
+			// toast.success("Folder Created");
+			notification("folderCheck")
 			changePage("folders");
 			syncHandler("auto", setIsSyncing, setData, notification,status);
 		}

@@ -7,7 +7,6 @@ import { loadSettings } from "@/helpers/settingsManager";
 import React, { useContext, useEffect, useState } from "react";
 import { CgFileAdd } from "react-icons/cg";
 
-
 type NoteType = {
 	id: string;
 	updatedAt: string | Date;
@@ -20,7 +19,7 @@ type NoteType = {
 export default function AllNotesPage() {
 	const [notes, setNotes] = useState<NoteType[]>([]);
 	// const [data, setData] = useState<DataType>();
-	const { isMounted, setIsMounted, prevPageName, selectedPageName , data } = useContext(Context);
+	const { isMounted, setIsMounted, prevPageName, selectedPageName, data } = useContext(Context);
 	const [settings, setSettings] = useState({ animations: true });
 	const [search, setSearch] = useState("");
 

@@ -48,7 +48,8 @@ export default function AddNotePage() {
 			newData!.notes.push(note);
 			setData(newData);
 			saveStorage(newData!);
-			toast.success("Note Added Successfully");
+			// toast.success("Note Added Successfully");
+			notification("noteCheck")
 			changePage("notes");
 			syncHandler("auto", setIsSyncing, setData, notification, status);
 		}

@@ -43,7 +43,8 @@ export default function NoteDetailsPage() {
 		newData!.notes.splice(index, 1, note);
 		setData(newData);
 		saveStorage(newData!);
-		toast.success("Note Edited Successfully");
+		// toast.success("Note Edited Successfully");
+		notification("noteCheck")
 		changePage("notes");
 		syncHandler("auto", setIsSyncing, setData, notification, status);
 	};

@@ -33,7 +33,7 @@ export const Context = createContext<{
 	data: DataType | undefined;
 	setData: React.Dispatch<React.SetStateAction<DataType>>;
 	notification: (name: string) => void;
-	notifications: { successSync: boolean, failedSync: boolean }
+	notifications: { successSync: boolean; failedSync: boolean; noteCheck: boolean; folderCheck: boolean };
 }>({
 	pageName: { name: "notes", id: "" },
 	prevPageName: { name: "", id: "" },
@@ -46,7 +46,7 @@ export const Context = createContext<{
 	data: undefined,
 	setData: () => {},
 	notification: () => {},
-	notifications : { successSync: false, failedSync: false }
+	notifications: { successSync: false, failedSync: false, noteCheck: false, folderCheck: false },
 });
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
@@ -56,22 +56,27 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const [selectedPageName, setSelectedPageName] = useState<string>("");
 	const [isMounted, setIsMounted] = useState(false);
 	const [isSyncing, setIsSyncing] = useState(false);
-	const [notifications, setNotifications] = useState({ successSync: false, failedSync: false });
+	const [notifications, setNotifications] = useState({
+		successSync: false,
+		failedSync: false,
+		noteCheck: false,
+		folderCheck: false,
+	});
 	const [data, setData] = useState<DataType>();
 
 	function notification(name: string) {
-		if (name==="successSync") {
+		if (name === "successSync") {
 			setNotifications((prevState) => ({ ...prevState, successSync: true }));
-		setTimeout(() => {
-			setNotifications((prevState) => ({ ...prevState, successSync: false }));
-		}, 3000);
-		}else if (name==="failedSync") {
+		} else if (name === "failedSync") {
 			setNotifications((prevState) => ({ ...prevState, failedSync: true }));
-			setTimeout(() => {
-				setNotifications((prevState) => ({ ...prevState, failedSync: false }));
-			}, 3000);
+		} else if (name === "noteCheck") {
+			setNotifications((prevState) => ({ ...prevState, noteCheck: true }));
+		} else if (name === "folderCheck") {
+			setNotifications((prevState) => ({ ...prevState, folderCheck: true }));
 		}
-		
+		setTimeout(() => {
+			setNotifications({ successSync: false, failedSync: false, noteCheck: false, folderCheck: false });
+		}, 3000);
 	}
 
 	function changePage(newPage: string, id: string | undefined) {

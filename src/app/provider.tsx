@@ -33,7 +33,13 @@ export const Context = createContext<{
 	data: DataType | undefined;
 	setData: React.Dispatch<React.SetStateAction<DataType>>;
 	notification: (name: string) => void;
-	notifications: { successSync: boolean; failedSync: boolean; noteCheck: boolean; folderCheck: boolean };
+	notifications: {
+		successSync: boolean;
+		failedSync: boolean;
+		noteCheck: boolean;
+		folderCheck: boolean;
+		removeSuccess: boolean;
+	};
 }>({
 	pageName: { name: "notes", id: "" },
 	prevPageName: { name: "", id: "" },
@@ -46,7 +52,7 @@ export const Context = createContext<{
 	data: undefined,
 	setData: () => {},
 	notification: () => {},
-	notifications: { successSync: false, failedSync: false, noteCheck: false, folderCheck: false },
+	notifications: { successSync: false, failedSync: false, noteCheck: false, folderCheck: false, removeSuccess: false },
 });
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
@@ -61,6 +67,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 		failedSync: false,
 		noteCheck: false,
 		folderCheck: false,
+		removeSuccess: false,
 	});
 	const [data, setData] = useState<DataType>();
 
@@ -73,9 +80,17 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 			setNotifications((prevState) => ({ ...prevState, noteCheck: true }));
 		} else if (name === "folderCheck") {
 			setNotifications((prevState) => ({ ...prevState, folderCheck: true }));
+		} else if (name === "removeSuccess") {
+			setNotifications((prevState) => ({ ...prevState, removeSuccess: true }));
 		}
 		setTimeout(() => {
-			setNotifications({ successSync: false, failedSync: false, noteCheck: false, folderCheck: false });
+			setNotifications({
+				successSync: false,
+				failedSync: false,
+				noteCheck: false,
+				folderCheck: false,
+				removeSuccess: false,
+			});
 		}, 3000);
 	}
 

@@ -62,7 +62,8 @@ export default function NoteDetailsPage() {
 		newData!.removedItems.push(note.id);
 		setData(newData);
 		saveStorage(newData!);
-		toast.success("Note Removed Successfully");
+		// toast.success("Note Removed Successfully");
+		notification("removeSuccess")
 		changePage("notes");
 		syncHandler("auto", setIsSyncing, setData, notification, status);
 	};

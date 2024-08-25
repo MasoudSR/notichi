@@ -69,7 +69,7 @@ export default function AllNotesPage() {
 				<div className="flex flex-col items-center justify-center mt-7">
 					<div>You have no notes</div>
 					<div className="flex justify-center items-center gap-1">
-						Use <CgFileAdd /> button to add new note.
+						Use <CgFileAdd /> button to add a new note.
 					</div>
 				</div>
 			)}

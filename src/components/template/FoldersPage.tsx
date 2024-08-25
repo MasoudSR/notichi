@@ -25,7 +25,7 @@ export default function FoldersPage() {
 				<div className="flex flex-col items-center justify-center mt-7">
 					<div>You have no folders</div>
 					<div className="flex justify-center items-center gap-1">
-						Use <LuFolderPlus /> button to add new folder.
+						Use <LuFolderPlus /> button to add a new folder.
 					</div>
 				</div>
 			)}

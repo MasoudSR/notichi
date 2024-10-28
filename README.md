@@ -1,10 +1,22 @@
-This is a simple notebook app.
+📒 Notichi: A Simple Notebook
 
-features: <br />
-save you're notes on you're browser local storage <br />
-folders for sorting notes <br />
-search between notes <br />
-sync notes with cloud <br />
-progressive web application
+A minimalist notebook app to keep your notes organized, accessible, and synced.
 
-<a href="http://notichi.netlify.app" target="_blank">try Notichi app</a>
+Features:<br>
+- 📝 Save Notes Locally: Store your notes directly in your browser's local storage.<br>
+- 📂 Organize with Folders: Keep notes sorted for easy access.<br>
+- 🔍 Search Notes: Quickly find notes by searching keywords.<br>
+- ☁️ Cloud Sync: Sync your notes across devices with cloud storage.<br>
+- 📱 Progressive Web App (PWA): Use offline as a standalone app.
+
+![Notichi Screenshots](./screenshots/notichi_screenshots.png)
+
+Technologies Used<br>
+- Next.js<br>
+- TypeScript<br>
+- Tailwind CSS<br>
+- API Routes<br>
+- MongoDB
+
+🌐 Try it out: [notichi.netlify.app](http://notichi.netlify.app)
+

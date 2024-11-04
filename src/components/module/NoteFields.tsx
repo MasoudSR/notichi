@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import AddToFolder from "./AddToFolder";
 import Shadow from "./Shadow";
 import { Context } from "@/app/provider";
@@ -26,35 +26,53 @@ export default function NoteFields({
 }) {
 	const [showFolders, setShowFolders] = useState(false);
 	const { isMounted, setIsMounted } = useContext(Context);
-	const [settings , setSettings] = useState(loadSettings)
-
+	const [settings, setSettings] = useState(loadSettings);
 
 	useEffect(() => {
 		setIsMounted(true);
 	}, []);
 
+	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+	const heightHandler = () => {
+		const textarea = textareaRef.current;
+		if (textarea) {
+			console.log("textarea bood");
+			textarea.style.height = "auto";
+			textarea.style.height = `${textarea.scrollHeight}px`;
+		}
+	};
+
 	return (
 		<>
 			<div
-				className={`m-6 font-medium ${ settings.animations ?
-					isMounted
-						? "animate-fade-up animate-duration-150 animate-ease-out"
-						: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse" : ""
+				className={`m-6 font-medium ${
+					settings.animations
+						? isMounted
+							? "animate-fade-up animate-duration-150 animate-ease-out"
+							: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+						: ""
 				}`}>
-				<input
-					type="text"
-					className="block w-full p-4 text-[#232326] border-gray-300 font-bold text-lg rounded-lg border focus:outline-[#0070F2] caret-[#0070F2]"
-					placeholder="Title"
-					value={note.title}
-					onChange={(e) => setNote({ ...note, title: e.target.value })}
-				/>
-				<textarea
-					rows={10}
-					className="border border-gray-300 text-[#232326] text-sm rounded-lg block w-full p-4 mt-2 focus:outline-[#0070F2] caret-[#0070F2]"
-					placeholder="Note"
-					value={note.text}
-					onChange={(e) => setNote({ ...note, text: e.target.value })}
-				/>
+				<div className="bg-white p-2 rounded-lg">
+					<input
+						type="text"
+						className="block w-full p-4 text-[#232326] border-none font-bold text-lg rounded-lg border focus:outline-none caret-[#0070F2]"
+						placeholder="Note Title"
+						value={note.title}
+						onChange={(e) => setNote({ ...note, title: e.target.value })}
+					/>
+					<textarea
+						rows={10}
+						ref={textareaRef}
+						className="border-none overflow-hidden resize-none text-[#232326] text-sm rounded-lg block w-full p-4 focus:outline-none caret-[#0070F2]"
+						placeholder="Take a note..."
+						value={note.text}
+						onChange={(e) => {
+							setNote({ ...note, text: e.target.value });
+							heightHandler();
+						}}
+					/>
+				</div>
 				<button
 					onClick={() => setShowFolders(true)}
 					className="bg-white flex justify-between w-full mt-3 px-4 py-2 rounded-lg">

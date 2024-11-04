@@ -8,6 +8,7 @@ import { Context } from "@/app/provider";
 import { loadSettings } from "@/helpers/settingsManager";
 import syncHandler from "@/helpers/syncHandler";
 import { useSession } from "next-auth/react";
+import NewFolder from "@/components/module/NewFolder";
 
 export default function NewFolderPage() {
 	const { changePage, isMounted, setIsMounted, setIsSyncing, data, setData, notification } = useContext(Context);
@@ -32,14 +33,14 @@ export default function NewFolderPage() {
 		} else {
 			const newData = data;
 			const newDate = new Date();
-			folder.updatedAt = newDate;
-			newData!.folders.push(folder);
+			const newFolder = folder
+			newFolder.updatedAt = newDate;
+			newData!.folders.push(newFolder);
 			setData(newData);
 			saveStorage(newData!);
-			// toast.success("Folder Created");
-			notification("folderCheck")
+			notification("folderCheck");
 			changePage("folders");
-			syncHandler("auto", setIsSyncing, setData, notification,status);
+			syncHandler("auto", setIsSyncing, setData, notification, status);
 		}
 	};
 
@@ -57,7 +58,7 @@ export default function NewFolderPage() {
 				className="block w-full p-4 text-[#232326] border-gray-300 rounded-lg border focus:outline-[#0070F2] caret-[#0070F2]"
 				placeholder="Folder Name"
 				value={folder.name}
-				style={{ unicodeBidi: "plaintext"}}
+				style={{ unicodeBidi: "plaintext" }}
 				onChange={(e) => setFolder({ ...folder, name: e.target.value })}
 			/>
 			<button

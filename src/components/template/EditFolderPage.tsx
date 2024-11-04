@@ -49,7 +49,6 @@ export default function EditFolderPage() {
 			newData!.notes = newNotes;
 			setData(newData);
 			saveStorage(newData!);
-			// toast.success("Folder Edited Successfully");
 			notification("folderCheck")
 
 			changePage("folder");
@@ -74,7 +73,6 @@ export default function EditFolderPage() {
 		newData!.removedItems.push(folder.id);
 		setData(newData);
 		saveStorage(newData!);
-		// toast.success("Folder Removed Successfully");
 		notification("removeSuccess")
 		changePage("folders");
 		syncHandler("auto", setIsSyncing, setData, notification, status);

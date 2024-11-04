@@ -37,7 +37,6 @@ export default function NoteFields({
 	const heightHandler = () => {
 		const textarea = textareaRef.current;
 		if (textarea) {
-			console.log("textarea bood");
 			textarea.style.height = "auto";
 			textarea.style.height = `${textarea.scrollHeight}px`;
 		}
@@ -53,7 +52,7 @@ export default function NoteFields({
 							: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
 						: ""
 				}`}>
-				<div className="bg-white p-2 rounded-lg">
+				<div className="bg-white p-2 rounded-lg drop-shadow">
 					<input
 						type="text"
 						className="block w-full p-4 text-[#232326] border-none font-bold text-lg rounded-lg border focus:outline-none caret-[#0070F2]"

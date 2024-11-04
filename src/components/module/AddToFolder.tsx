@@ -2,7 +2,8 @@ import { Context } from "@/app/provider";
 // import loadStorage from "@/helpers/loadStorage";
 import { loadSettings } from "@/helpers/settingsManager";
 import React, { useContext, useEffect, useState } from "react";
-import { LuFolderPlus } from "react-icons/lu";
+import { LuPlus } from "react-icons/lu";
+import NewFolder from "./NewFolder";
 
 type NoteType = {
 	id: string;
@@ -25,9 +26,10 @@ export default function AddToFolder({
 	setNote: React.Dispatch<React.SetStateAction<NoteType>>;
 	setShowFolders: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-	const { changePage , data } = useContext(Context);
+	const { changePage, data } = useContext(Context);
 	const [folders, setFolders] = useState<FolderType[]>([]);
-	const [settings] = useState(loadSettings)
+	const [settings] = useState(loadSettings);
+	const [isCreatingNewFolder, setIsCreatingNewFolder] = useState(false);
 
 	const addToFolderHandler = (folder: FolderType) => {
 		setNote({ ...note, folderId: folder.id, folderName: folder.name });
@@ -38,28 +40,33 @@ export default function AddToFolder({
 		// const data = loadStorage();
 		setFolders(data!.folders);
 	}, []);
+
 	return (
 		<div
-			className={`bg-white fixed rounded-3xl w-screen max-w-4xl -bottom-[70%] z-20 h-[70%] p-10 drop-shadow overflow-y-auto pb-28 grid gap-6 grid-cols-1 md:grid-cols-4 sm:grid-cols-2 no-scrollbar content-start ${settings.animations && "transition-all duration-500"} ${
-				showFolders && "-translate-y-[100%]"
-			}`}>
-			{folders.map((folder) => (
-				<button
-					key={folder.id}
-					onClick={() => addToFolderHandler(folder)}
-					className="bg-white rounded-b-lg rounded-tr-lg drop-shadow p-8 relative text-center flex-1">
-					<div className="absolute left-0 -top-2 h-4 max-w-[40%] w-full bg-white rounded-t-lg"></div>
-					{folder.name}
-				</button>
-			))}
-			{folders.length === 0 && (
-				<div
-					onClick={() => {
-						changePage("addFolder");
-					}}
-					className="mr-3 flex justify-center items-end cursor-pointer">
-					<LuFolderPlus size={27} />
-					Create New Folder
+			className={`bg-white fixed rounded-3xl w-screen max-w-4xl -bottom-[70%] z-20 h-[70%] p-10 drop-shadow overflow-y-auto pb-28 no-scrollbar content-start ${
+				settings.animations && "transition-all duration-500"
+			} ${showFolders && "-translate-y-[100%]"}`}>
+			{isCreatingNewFolder ? (
+				<NewFolder active={setIsCreatingNewFolder} />
+			) : (
+				<div className="grid gap-6 grid-cols-1 md:grid-cols-4 sm:grid-cols-2 animate-fade-up animate-duration-300 animate-ease-out">
+					{folders.map((folder) => (
+						<button
+							key={folder.id}
+							onClick={() => addToFolderHandler(folder)}
+							className="bg-white rounded-b-lg rounded-tr-lg drop-shadow p-8 relative text-center flex-1">
+							<div className="absolute left-0 -top-2 h-4 max-w-[40%] w-full bg-white rounded-t-lg"></div>
+							{folder.name}
+						</button>
+					))}
+					<div
+						onClick={() => {
+							setIsCreatingNewFolder(true);
+						}}
+						className="bg-white cursor-pointer rounded-b-lg rounded-tr-lg drop-shadow items-center justify-center flex p-8 relative text-center flex-1">
+						<div className="absolute left-0 -top-2 h-4 max-w-[40%] w-full bg-white rounded-t-lg"></div>
+							<LuPlus size={30} color="gray" />
+					</div>
 				</div>
 			)}
 		</div>

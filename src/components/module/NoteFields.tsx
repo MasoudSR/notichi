@@ -59,6 +59,7 @@ export default function NoteFields({
 						className="block w-full p-4 text-[#232326] border-none font-bold text-lg rounded-lg border focus:outline-none caret-[#0070F2]"
 						placeholder="Note Title"
 						value={note.title}
+						style={{ unicodeBidi: "plaintext"}}
 						onChange={(e) => setNote({ ...note, title: e.target.value })}
 					/>
 					<textarea
@@ -67,6 +68,7 @@ export default function NoteFields({
 						className="border-none overflow-hidden resize-none text-[#232326] text-sm rounded-lg block w-full p-4 focus:outline-none caret-[#0070F2]"
 						placeholder="Take a note..."
 						value={note.text}
+						style={{ unicodeBidi: "plaintext"}}
 						onChange={(e) => {
 							setNote({ ...note, text: e.target.value });
 							heightHandler();

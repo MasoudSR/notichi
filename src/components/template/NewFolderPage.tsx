@@ -57,6 +57,7 @@ export default function NewFolderPage() {
 				className="block w-full p-4 text-[#232326] border-gray-300 rounded-lg border focus:outline-[#0070F2] caret-[#0070F2]"
 				placeholder="Folder Name"
 				value={folder.name}
+				style={{ unicodeBidi: "plaintext"}}
 				onChange={(e) => setFolder({ ...folder, name: e.target.value })}
 			/>
 			<button

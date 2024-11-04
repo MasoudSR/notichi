@@ -55,6 +55,7 @@ export default function AllNotesPage() {
 					type="text"
 					className="bg-[#E3E3E8] rounded-lg w-full p-3"
 					placeholder="Search"
+					style={{ unicodeBidi: "plaintext"}}
 					value={search}
 					onChange={searchHandler}
 				/>

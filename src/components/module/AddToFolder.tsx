@@ -52,7 +52,7 @@ export default function AddToFolder({
 		<div
 			className={`bg-white fixed rounded-3xl w-screen max-w-4xl -bottom-[100%] z-20 h-[100%] p-10 drop-shadow overflow-y-auto pb-28 no-scrollbar content-start ${
 				settings.animations && "transition-all duration-500"
-			} ${showFolders && `-translate-y-[${translateValue}]`}`}
+			} ${showFolders && (translateValue === "100%" ? "-translate-y-full" : "-translate-y-[70%]")}`}
 			onScroll={handleScroll}>
 			{isCreatingNewFolder ? (
 				<NewFolder active={setIsCreatingNewFolder} />

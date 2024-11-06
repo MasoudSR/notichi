@@ -1,5 +1,4 @@
 import { Context } from "@/app/provider";
-// import loadStorage from "@/helpers/loadStorage";
 import { loadSettings } from "@/helpers/settingsManager";
 import React, { useContext, useEffect, useState } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -30,6 +29,15 @@ export default function AddToFolder({
 	const [folders, setFolders] = useState<FolderType[]>([]);
 	const [settings] = useState(loadSettings);
 	const [isCreatingNewFolder, setIsCreatingNewFolder] = useState(false);
+	const [translateValue, setTranslateValue] = useState("70%");
+
+	const handleScroll = (e:React.UIEvent<HTMLDivElement>) => {
+		if (e.currentTarget.scrollTop > 0) {
+			setTranslateValue("100%");
+		} else {
+			setTranslateValue("70%");
+		}
+	};
 
 	const addToFolderHandler = (folder: FolderType) => {
 		setNote({ ...note, folderId: folder.id, folderName: folder.name });
@@ -37,15 +45,15 @@ export default function AddToFolder({
 	};
 
 	useEffect(() => {
-		// const data = loadStorage();
 		setFolders(data!.folders);
 	}, []);
 
 	return (
 		<div
-			className={`bg-white fixed rounded-3xl w-screen max-w-4xl -bottom-[70%] z-20 h-[70%] p-10 drop-shadow overflow-y-auto pb-28 no-scrollbar content-start ${
+			className={`bg-white fixed rounded-3xl w-screen max-w-4xl -bottom-[100%] z-20 h-[100%] p-10 drop-shadow overflow-y-auto pb-28 no-scrollbar content-start ${
 				settings.animations && "transition-all duration-500"
-			} ${showFolders && "-translate-y-[100%]"}`}>
+			} ${showFolders && `-translate-y-[${translateValue}]`}`}
+			onScroll={handleScroll}>
 			{isCreatingNewFolder ? (
 				<NewFolder active={setIsCreatingNewFolder} />
 			) : (
@@ -65,7 +73,7 @@ export default function AddToFolder({
 						}}
 						className="bg-white cursor-pointer rounded-b-lg rounded-tr-lg drop-shadow items-center justify-center flex p-8 relative text-center flex-1">
 						<div className="absolute left-0 -top-2 h-4 max-w-[40%] w-full bg-white rounded-t-lg"></div>
-							<LuPlus size={30} color="gray" />
+						<LuPlus size={30} color="gray" />
 					</div>
 				</div>
 			)}

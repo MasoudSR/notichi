@@ -18,5 +18,6 @@ Technologies Used<br>
 - API Routes<br>
 - MongoDB
 
-🌐 Try it out: [notichi.netlify.app](http://notichi.netlify.app)
+Note: Authentication and cloud sync are disabled in live demo.
 
+🌐 Try it out: [notichi.masoudsr.ir](http://notichi.masoudsr.ir)

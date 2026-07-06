@@ -49,6 +49,7 @@ export default function SettingsPage() {
 	const [clearStoragePopUp, setClearStoragePopUp] = useState(false);
 	const [settings, setSettings] = useState(loadSettings);
 	const [isOnline, setIsOnline] = useState(false);
+	const [demoMode, setDemoMode] = useState(true);
 
 	const onlineChecker = () => {
 		navigator.onLine ? setIsOnline(true) : setIsOnline(false);
@@ -74,14 +75,16 @@ export default function SettingsPage() {
 				? "animate-fade-left animate-duration-150 animate-ease-out"
 				: "animate-fade-up animate-duration-150 animate-ease-out"
 			: selectedPageName === "folders" || selectedPageName === "notes"
-			? "animate-fade-out-right animate-duration-150 animate-ease-out"
-			: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
+				? "animate-fade-out-right animate-duration-150 animate-ease-out"
+				: "animate-fade-down animate-duration-150 animate-ease-out animate-reverse"
 		: "";
 
 	return (
 		<>
 			<div className={`p-6 flex flex-col gap-8 ${animations}`}>
-				{isOnline ? (
+				{demoMode ? (
+					<div className="text-gray-600 flex py-4 bg-white rounded-lg justify-center">Public demo: Authentication and cloud sync are disabled.</div>
+				) : isOnline ? (
 					status === "loading" ? (
 						<div className="flex font-medium text-xl bg-white rounded-lg justify-center">
 							<span className="border-4 border-t-orange-300 animate-spin h-8 w-8 m-3 block rounded-full" />
@@ -165,6 +168,7 @@ export default function SettingsPage() {
 						</div>
 					</div>
 				)}
+
 				<div className="font-medium text-xl flex flex-col bg-white rounded-lg">
 					<div className="flex justify-between  py-3 px-5 items-center">
 						<span>Animations</span>
